@@ -458,7 +458,19 @@
 </div>
 
 <script>
-  const coinImg = `<img src="token_coin_icon.png" alt="توكنز" style="width:100%;height:100%;object-fit:contain;">`;
+  const coinSVG = `
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="coinGrad" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#fbe08a"/>
+        <stop offset="55%" stop-color="#e6ab3f"/>
+        <stop offset="100%" stop-color="#a9741f"/>
+      </radialGradient>
+    </defs>
+    <circle cx="50" cy="50" r="46" fill="url(#coinGrad)" stroke="#8a5c15" stroke-width="3"/>
+    <circle cx="50" cy="50" r="36" fill="none" stroke="#8a5c15" stroke-width="2" opacity="0.5"/>
+    <text x="50" y="62" font-size="34" text-anchor="middle" fill="#8a5c15" font-family="Cairo, sans-serif" font-weight="900">$</text>
+  </svg>`;
 
   const packages = [
     { name: "الفئة الأولى", amount: "100,000", price: "$10" },
@@ -477,9 +489,9 @@
     card.className = 'card';
     card.innerHTML = `
       <div class="info-icon">i</div>
-      <div class="coin-icon">${coinImg}</div>
+      <div class="coin-icon">${coinSVG}</div>
       <div class="pack-name">${p.name}</div>
-      <div class="pack-amount">${p.amount} <span class="mini-coin">${coinImg}</span></div>
+      <div class="pack-amount">${p.amount} <span class="mini-coin">${coinSVG}</span></div>
       <button class="buy-btn" data-state="price" data-name="${p.name}" data-amount="${p.amount}" data-price="${p.price}" onclick="handleBuy(this)">${p.price}</button>
     `;
     grid.appendChild(card);
