@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>متجر التوكنز</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #0b0c10;
+    --bg-alt: #131519;
+    --card: #191b20;
+    --card-border: #2a2d34;
+    --gold: #e6ab3f;
+    --gold-soft: #f4c96a;
+    --violet: #8f7fe0;
+    --violet-soft: #5c4fa8;
+    --green: #2fae52;
+    --green-dark: #23893f;
+    --text: #f2f1ec;
+    --text-dim: #9a9ea8;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  body{
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Tajawal', sans-serif;
+    min-height:100vh;
+    padding-bottom: 60px;
+  }
+  header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding: 18px 22px;
+    background: linear-gradient(180deg, var(--bg-alt), var(--bg));
+    border-bottom: 1px solid var(--card-border);
+  }
+  .login-btn{
+    background: linear-gradient(180deg, #38c264, var(--green-dark));
+    color:#fff;
+    border:none;
+    padding: 12px 26px;
+    border-radius: 999px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size: 15px;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.25);
+    cursor:pointer;
+  }
+  .brand{
+    font-family:'Cairo', sans-serif;
+    font-weight:900;
+    font-size: 26px;
+    letter-spacing: 0.5px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color: var(--gold-soft);
+  }
+  .brand span.dot{ color: var(--violet); font-size: 14px; }
+  .menu-icon{
+    display:flex;
+    flex-direction:column;
+    gap:5px;
+    cursor:pointer;
+  }
+  .menu-icon i{ width:26px; height:3px; background:#e7e7e7; border-radius:2px; display:block; }
+
+  nav.tabs{
+    display:flex;
+    gap:12px;
+    padding: 18px 20px 6px;
+    overflow-x:auto;
+    background: var(--bg);
+  }
+  .tab{
+    flex-shrink:0;
+    padding: 12px 26px;
+    border-radius: 999px;
+    border: 1.5px solid var(--violet);
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size: 15px;
+    color: var(--text);
+    background: transparent;
+    cursor:pointer;
+    transition: all .15s ease;
+  }
+  .tab.active{
+    background: linear-gradient(180deg, var(--violet), var(--violet-soft));
+    border-color: transparent;
+    color:#fff;
+    box-shadow: 0 3px 10px rgba(143,127,224,0.35);
+  }
+
+  main{
+    padding: 26px 20px 10px;
+  }
+  h1.section-title{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size: 22px;
+    margin-bottom: 22px;
+    color: var(--text);
+  }
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    max-width: 900px;
+  }
+  @media (min-width: 720px){
+    .grid{ grid-template-columns: repeat(4, 1fr); }
+  }
+  .card{
+    background: radial-gradient(circle at 50% 20%, #20232a 0%, var(--card) 70%);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 18px 14px 20px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    text-align:center;
+    position:relative;
+    transition: transform .15s ease, border-color .15s ease;
+  }
+  .card:hover{
+    transform: translateY(-3px);
+    border-color: var(--violet);
+  }
+  .info-icon{
+    position:absolute;
+    top:12px;
+    right:12px;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#2a2d34;
+    color: var(--text-dim);
+    font-size:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
+  }
+  .coin-icon{
+    width: 78px;
+    height: 78px;
+    margin: 14px 0 12px;
+  }
+  .pack-name{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size: 15.5px;
+    color: var(--text);
+    margin-bottom: 14px;
+    min-height: 22px;
+  }
+  .pack-amount{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size: 21px;
+    color: var(--gold-soft);
+    margin-bottom: 18px;
+  }
+  .pack-amount .mini-coin{
+    width:24px; height:24px;
+  }
+  .buy-btn{
+    width:100%;
+    background: linear-gradient(180deg, #38c264, var(--green-dark));
+    color:#fff;
+    border:none;
+    padding: 13px 0;
+    border-radius: 12px;
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size: 16px;
+    letter-spacing: 0.5px;
+    cursor:pointer;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.3);
+  }
+  .buy-btn:active{ transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.3); }
+
+  footer{
+    margin-top: 50px;
+    padding: 24px 20px;
+    border-top: 1px solid var(--card-border);
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    color: var(--text-dim);
+    font-size: 13px;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <button class="login-btn">تسجيل الدخول</button>
+  <div class="brand">اسم متجرك <span class="dot">●</span></div>
+  <div class="menu-icon"><i></i><i></i><i></i></div>
+</header>
+
+<nav class="tabs">
+  <button class="tab active">توكنز</button>
+  <button class="tab">الحزم</button>
+  <button class="tab">مجاني</button>
+  <button class="tab">عروض الأسبوع</button>
+</nav>
+
+<main>
+  <h1 class="section-title">توكنز</h1>
+  <div class="grid" id="grid"></div>
+</main>
+
+<footer>
+  <span>اسم متجرك</span>
+  <span>© 2026 جميع الحقوق محفوظة</span>
+</footer>
+
+<script>
+  const coinSVG = `
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="coinGrad" cx="35%" cy="30%" r="75%">
+        <stop offset="0%" stop-color="#fbe08a"/>
+        <stop offset="55%" stop-color="#e6ab3f"/>
+        <stop offset="100%" stop-color="#a9741f"/>
+      </radialGradient>
+    </defs>
+    <circle cx="50" cy="50" r="46" fill="url(#coinGrad)" stroke="#8a5c15" stroke-width="3"/>
+    <circle cx="50" cy="50" r="36" fill="none" stroke="#8a5c15" stroke-width="2" opacity="0.5"/>
+    <text x="50" y="62" font-size="34" text-anchor="middle" fill="#8a5c15" font-family="Cairo, sans-serif" font-weight="900">$</text>
+  </svg>`;
+
+  const packages = [
+    { name: "قطع من التوكنز", amount: "19,000", price: "USD 3" },
+    { name: "كمشة من التوكنز", amount: "34,000", price: "USD 5" },
+    { name: "حزمة من التوكنز", amount: "50,000", price: "USD 7" },
+    { name: "كومة من التوكنز", amount: "105,000", price: "USD 14" },
+    { name: "رزمة من التوكنز", amount: "240,000", price: "USD 30" },
+    { name: "كيس من التوكنز", amount: "410,000", price: "USD 50" },
+    { name: "حقيبة من التوكنز", amount: "830,000", price: "USD 100" },
+    { name: "صندوق من التوكنز", amount: "1,000,000", price: "USD 115" },
+  ];
+
+  const grid = document.getElementById('grid');
+  packages.forEach(p => {
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="info-icon">i</div>
+      <div class="coin-icon">${coinSVG}</div>
+      <div class="pack-name">${p.name}</div>
+      <div class="pack-amount">${p.amount} <span class="mini-coin">${coinSVG}</span></div>
+      <button class="buy-btn">${p.price}</button>
+    `;
+    grid.appendChild(card);
+  });
+</script>
+
+</body>
+</html>
