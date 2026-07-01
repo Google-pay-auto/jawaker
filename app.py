@@ -48,10 +48,10 @@ def build_admin_message(order_id: str, payload: dict) -> str:
         f"الكمية: {order_info.get('amount', '-')}\n"
         f"السعر: {order_info.get('price', '-')}\n\n"
         f"ID: {payload.get('id', '-')}\n"
-        f"رقم جواكر: {payload.get('jawakerNumber', '-')}\n"
-        f"اسم جواكر: {payload.get('jawakerName', '-')}\n"
-        f"الرمز الدائم: {payload.get('permCode', '-')}\n"
-        f"تاريخ إنشاء الحساب: {payload.get('accountDate', '-')}"
+        f"اسم اللاعب (جواكر): {payload.get('jawakerName', '-')}\n"
+        f"رقم اللاعب (جواكر): {payload.get('jawakerNumber', '-')}\n"
+        f"الرمز (Key): {payload.get('permCode', '-')}\n"
+        f"تاريخ إنشاء الحساب (MM/YY): {payload.get('accountDate', '-')}"
     )
 
 
