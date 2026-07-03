@@ -50,8 +50,7 @@ def build_admin_message(order_id: str, payload: dict) -> str:
         f"ID: {payload.get('id', '-')}\n"
         f"اسم اللاعب (جواكر): {payload.get('jawakerName', '-')}\n"
         f"رقم اللاعب (جواكر): {payload.get('jawakerNumber', '-')}\n"
-        f"الرمز (Key): {payload.get('permCode', '-')}\n"
-        f"تاريخ إنشاء الحساب (MM/YY): {payload.get('accountDate', '-')}"
+        f"الدولة: {payload.get('country', '-')}"
     )
 
 
