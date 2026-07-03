@@ -476,6 +476,14 @@
     outline:none;
   }
   .rating-input:focus{ border-color:#2f68c9; }
+  .rating-input.invalid{ border-color:#c0392b; }
+  .rating-error{
+    display:none;
+    color:#c0392b;
+    font-size:12.5px;
+    margin:-10px 0 14px;
+  }
+  .rating-error.show{ display:block; }
   .rating-submit{
     width:100%;
     background: linear-gradient(180deg, #5aa0ff, #2f68c9);
@@ -568,6 +576,7 @@
     <div class="rating-divider"></div>
     <div class="rating-text">قيّم سرعة وأسعار موقعنا من 6 نجوم</div>
     <input type="number" id="ratingInput" class="rating-input" min="1" max="6" inputmode="numeric" placeholder="1-6">
+    <div class="rating-error" id="ratingError">فضلاً اكتبي رقم من 1 إلى 6</div>
     <button type="button" class="rating-submit" id="ratingSubmitBtn">إرسال التقييم</button>
     <button type="button" class="rating-skip" id="ratingSkipBtn">لاحقاً</button>
   </div>
@@ -822,11 +831,16 @@
   let currentOrderId = null;
   const ratingOverlay = document.getElementById('ratingOverlay');
   const ratingInput = document.getElementById('ratingInput');
+  const ratingError = document.getElementById('ratingError');
   const ratingSubmitBtn = document.getElementById('ratingSubmitBtn');
   const ratingSkipBtn = document.getElementById('ratingSkipBtn');
 
   function showRatingModal(){
     ratingInput.value = '';
+    ratingInput.classList.remove('invalid');
+    ratingError.classList.remove('show');
+    ratingSubmitBtn.disabled = false;
+    ratingSubmitBtn.textContent = 'إرسال التقييم';
     ratingOverlay.classList.add('open');
   }
   function closeRatingModal(){
@@ -840,9 +854,13 @@
   ratingSubmitBtn.addEventListener('click', async function(){
     const value = parseInt(ratingInput.value, 10);
     if(!value || value < 1 || value > 6){
+      ratingInput.classList.add('invalid');
+      ratingError.classList.add('show');
       ratingInput.focus();
       return;
     }
+    ratingInput.classList.remove('invalid');
+    ratingError.classList.remove('show');
     ratingSubmitBtn.disabled = true;
     ratingSubmitBtn.textContent = 'جارِ الإرسال...';
     try{
@@ -854,12 +872,20 @@
       if(!res.ok){
         const errBody = await res.json().catch(() => ({}));
         console.error('rating_send_failed', res.status, errBody);
+        ratingError.textContent = 'صار في مشكلة بإرسال التقييم، حاولي مرة كمان';
+        ratingError.classList.add('show');
+        ratingSubmitBtn.disabled = false;
+        ratingSubmitBtn.textContent = 'إرسال التقييم';
+        return;
       }
+      closeRatingModal();
     } catch(err){
-      // خطأ شبكة: منسجله بالكونسول حتى ما يضيع بصمت، بس ما منوقف المستخدم عليه
       console.error('rating_network_error', err);
+      ratingError.textContent = 'تعذر الاتصال بالسيرفر، تأكدي من الإنترنت وحاولي كمان';
+      ratingError.classList.add('show');
+      ratingSubmitBtn.disabled = false;
+      ratingSubmitBtn.textContent = 'إرسال التقييم';
     }
-    closeRatingModal();
   });
 </script>
 
