@@ -97,7 +97,7 @@ def get_order_status(order_id):
 
 @app.route("/api/rating", methods=["POST"])
 def submit_rating():
-    payload = request.get_json(force=True)
+    payload = request.get_json(force=True) or {}
     order_id = payload.get("order_id", "-")
     rating = payload.get("rating", "-")
 
@@ -108,12 +108,18 @@ def submit_rating():
     )
 
     try:
-        requests.post(
+        r = requests.post(
             f"{TELEGRAM_API}/sendMessage",
             json={"chat_id": ADMIN_CHAT_ID, "text": text},
             timeout=10,
         )
+        tg_response = r.json()
+        if not tg_response.get("ok"):
+            # تيليجرام رفض الرسالة (توكن غلط / chat_id غلط / البوت مسكّر...)
+            print("Telegram rejected rating message:", tg_response)
+            return jsonify({"error": "telegram_rejected", "details": tg_response}), 502
     except requests.RequestException as e:
+        print("Failed to reach Telegram for rating:", e)
         return jsonify({"error": f"telegram_send_failed: {e}"}), 502
 
     return jsonify({"ok": True})
