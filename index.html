@@ -868,13 +868,18 @@
     ratingSubmitBtn.disabled = true;
     ratingSubmitBtn.textContent = 'جارِ الإرسال...';
     try{
-      await fetch(`${BACKEND_URL}/api/rating`, {
+      const res = await fetch(`${BACKEND_URL}/api/rating`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ order_id: currentOrderId, rating: value }),
       });
+      if(!res.ok){
+        const errBody = await res.json().catch(() => ({}));
+        console.error('rating_send_failed', res.status, errBody);
+      }
     } catch(err){
-      // تجاهل أي خطأ شبكة، ما منوقف المستخدم عليه
+      // خطأ شبكة: منسجله بالكونسول حتى ما يضيع بصمت، بس ما منوقف المستخدم عليه
+      console.error('rating_network_error', err);
     }
     closeRatingModal();
   });
