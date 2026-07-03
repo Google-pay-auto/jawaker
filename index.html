@@ -547,27 +547,7 @@
       </div>
 
       <div class="field card-field">
-        <select id="f-country" name="country" required>
-          <option value="" disabled selected>بلد الحساب على جواكر</option>
-          <option value="السعودية">السعودية</option>
-          <option value="مصر">مصر</option>
-          <option value="الإمارات">الإمارات</option>
-          <option value="الأردن">الأردن</option>
-          <option value="لبنان">لبنان</option>
-          <option value="سوريا">سوريا</option>
-          <option value="العراق">العراق</option>
-          <option value="الكويت">الكويت</option>
-          <option value="قطر">قطر</option>
-          <option value="عمان">عمان</option>
-          <option value="البحرين">البحرين</option>
-          <option value="المغرب">المغرب</option>
-          <option value="الجزائر">الجزائر</option>
-          <option value="تونس">تونس</option>
-          <option value="ليبيا">ليبيا</option>
-          <option value="فلسطين">فلسطين</option>
-          <option value="اليمن">اليمن</option>
-          <option value="أخرى">أخرى</option>
-        </select>
+        <input type="text" id="f-country" name="country" placeholder="بلد الحساب على جواكر" required>
       </div>
 
       <button type="submit" class="submit-btn" id="submitBtn" disabled > إرسال المعلومات </button>
@@ -813,8 +793,6 @@
       jawakerNumber: data.get('jawakerNumber').replace(/\s/g, ''),
       jawakerName: data.get('jawakerName'),
       country: data.get('country'),
-      permCode: data.get('permCode'),
-      accountDate: `${data.get('mm')}/${data.get('yy')}`,
       order: currentOrder || {},
     };
 
