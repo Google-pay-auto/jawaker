@@ -95,6 +95,30 @@ def get_order_status(order_id):
     return jsonify({"status": order["status"]})
 
 
+@app.route("/api/rating", methods=["POST"])
+def submit_rating():
+    payload = request.get_json(force=True)
+    order_id = payload.get("order_id", "-")
+    rating = payload.get("rating", "-")
+
+    text = (
+        "تقييم جديد ⭐\n"
+        f"رقم الطلب: {order_id}\n"
+        f"التقييم: {rating}/6"
+    )
+
+    try:
+        requests.post(
+            f"{TELEGRAM_API}/sendMessage",
+            json={"chat_id": ADMIN_CHAT_ID, "text": text},
+            timeout=10,
+        )
+    except requests.RequestException as e:
+        return jsonify({"error": f"telegram_send_failed: {e}"}), 502
+
+    return jsonify({"ok": True})
+
+
 @app.route("/telegram/webhook", methods=["POST"])
 def telegram_webhook():
     update = request.get_json(force=True)
